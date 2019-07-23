@@ -3,6 +3,7 @@ package kr.hsoft.boot.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,6 +28,7 @@ public class MathController {
 		return "math controller";
 	}
 
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public MathResultDomain add(@RequestBody @Valid MathInsertDomain insert) {
 		MathResultDomain resultDomain = new MathResultDomain();
