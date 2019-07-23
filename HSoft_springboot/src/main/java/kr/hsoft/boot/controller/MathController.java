@@ -1,5 +1,7 @@
 package kr.hsoft.boot.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +24,13 @@ public class MathController {
 	
 	@Autowired
 	private MathResultService mathResultService;
-	
-	@RequestMapping
-	public String main() {
-		return "math controller";
+
+	@CrossOrigin(origins = "http://localhost:3000")
+	@RequestMapping(method=RequestMethod.GET)
+	public List<MathResultDomain> main() {
+		List<MathResultDomain> resultDomain = mathResultService.getResults();
+		
+		return resultDomain;
 	}
 
 	@CrossOrigin(origins = "http://localhost:3000")
