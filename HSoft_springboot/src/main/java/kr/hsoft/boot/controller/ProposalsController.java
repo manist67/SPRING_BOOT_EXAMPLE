@@ -22,13 +22,7 @@ public class ProposalsController {
 	public String getProposals(
 			@RequestHeader HashMap<String, String> header, 
 			@RequestParam(required=false) HashMap<String, String> params) {
-		System.out.println(header.toString());
-		System.out.println(params.toString());
-		/*
-		 * token을 auth디비에서 꺼내온다.
-		 * 권한이 있으면 return ~~~~
-		 * 없으면 http response 403해준다. 
-		 */
+		
 		return "hello";
 	}
 
