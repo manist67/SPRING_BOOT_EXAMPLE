@@ -24,27 +24,6 @@ public class UserService {
 	@Autowired
 	AuthMapper authMapper;
 
-	public AuthDomain login(LoginDomain loginDomain) throws UserNotFoundException {
-		// TODO: encrypted the password
-
-		UserDTO user = userMapper.selectUserByIDandPassword(loginDomain);
-
-		if (user == null) {
-			throw new UserNotFoundException();
-		}
-
-		AuthDomain authDomain = new AuthDomain();
-
-		authDomain.setUserSeq(user.getSeq());
-		authDomain.setToken("asdf");
-		authDomain.setReToken("asdfg");
-		authDomain.setExpire(3600);
-
-		authMapper.createAuthToken(authDomain);
-
-		return authDomain;
-	}
-
 	public UserDomain getUser(String token) throws UserNotFoundException, AuthNotFoundException{
 		AuthDomain auth = authMapper.selectToken(token);
 		if(auth == null) {
@@ -84,10 +63,5 @@ public class UserService {
 		}
 		
 		return userDomains;
-	}
-	
-	public void logout(String token) {
-		authMapper.deleteToken(token);
-		return;
 	}
 }

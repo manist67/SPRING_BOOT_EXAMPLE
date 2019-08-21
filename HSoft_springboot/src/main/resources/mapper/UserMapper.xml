@@ -4,12 +4,54 @@
 
 <mapper namespace="kr.hsoft.boot.mapper.UserMapper">
 	<select id="selectUserByIDandPassword" parameterType="kr.hsoft.boot.domain.LoginDomain" resultType="kr.hsoft.boot.dto.UserDTO">
-		SELECT * FROM USER limit 1
+		SELECT 
+			SEQ as seq,
+			USER_ID as userID,
+			ADDRESS1 as address1,
+			ADDRESS2 as address2,
+			PHONE as phone,
+			EMAIL as email,
+			GENDER as gender,
+			NICKNAME as nickname,
+			NAME as name,
+			`CREATE` as `create`,
+			`MODIFY` as `modify`,
+			AUTH as auth,
+			ENABLE as enable
+		FROM USER limit 1
 	</select>
 	<select id="selectUserBySeq" parameterType="java.lang.Integer" resultType="kr.hsoft.boot.dto.UserDTO">
-		SELECT * FROM USER WHERE SEQ = #{seq}
+		SELECT 
+			SEQ as seq,
+			USER_ID as userID,
+			ADDRESS1 as address1,
+			ADDRESS2 as address2,
+			PHONE as phone,
+			EMAIL as email,
+			GENDER as gender,
+			NICKNAME as nickname,
+			NAME as name,
+			`CREATE` as `create`,
+			`MODIFY` as `modify`,
+			AUTH as auth,
+			ENABLE as enable
+		FROM USER WHERE SEQ = #{seq}
 	</select>
 	<select id="selectUsers" parameterType="kr.hsoft.boot.domain.PaginationDomain" resultType="kr.hsoft.boot.dto.UserDTO">
-		SELECT * FROM USER LIMIT #{page}, #{unit}
+		SELECT
+			SEQ as seq,
+			USER_ID as userID,
+			ADDRESS1 as address1,
+			ADDRESS2 as address2,
+			PHONE as phone,
+			EMAIL as email,
+			GENDER as gender,
+			NICKNAME as nickname,
+			NAME as name,
+			`CREATE` as `create`,
+			`MODIFY` as `modify`,
+			AUTH as auth,
+			ENABLE as enable
+		FROM USER LIMIT #{page}, #{unit}
 	</select>
 </mapper>
