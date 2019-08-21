@@ -1,5 +1,7 @@
 package kr.hsoft.boot.dto;
 
+import java.sql.Timestamp;
+
 public class UserDTO {
 	private int seq;
 	private String userID;
@@ -9,8 +11,8 @@ public class UserDTO {
 	private String email;
 	private char gender;
 	private String nickname;
-	private int create;
-	private int modify;
+	private Timestamp create;
+	private Timestamp modify;
 	private String auth;
 	private boolean enable;
 	
@@ -62,16 +64,16 @@ public class UserDTO {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-	public int getCreate() {
+	public Timestamp getCreate() {
 		return create;
 	}
-	public void setCreate(int create) {
+	public void setCreate(Timestamp create) {
 		this.create = create;
 	}
-	public int getModify() {
+	public Timestamp getModify() {
 		return modify;
 	}
-	public void setModify(int modify) {
+	public void setModify(Timestamp modify) {
 		this.modify = modify;
 	}
 	public String getAuth() {

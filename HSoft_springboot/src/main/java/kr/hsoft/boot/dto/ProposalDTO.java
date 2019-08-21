@@ -14,8 +14,8 @@ public class ProposalDTO {
 	private int maxParticipants;
 	private String requirements;
 	private String contents; /* html type in here */
-	private int create;
-	private int modify;
+	private Integer create;
+	private Integer modify;
 	
 	public String getTitle() {
 		return title;
