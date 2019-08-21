@@ -9,4 +9,7 @@
 	<select id="selectUserBySeq" parameterType="java.lang.Integer" resultType="kr.hsoft.boot.dto.UserDTO">
 		SELECT * FROM USER WHERE SEQ = #{seq}
 	</select>
+	<select id="selectUsers" parameterType="kr.hsoft.boot.domain.PaginationDomain" resultType="kr.hsoft.boot.dto.UserDTO">
+		SELECT * FROM USER LIMIT #{page}, #{unit}
+	</select>
 </mapper>

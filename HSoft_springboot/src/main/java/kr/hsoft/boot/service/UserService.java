@@ -1,10 +1,14 @@
 package kr.hsoft.boot.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.hsoft.boot.domain.AuthDomain;
 import kr.hsoft.boot.domain.LoginDomain;
+import kr.hsoft.boot.domain.PaginationDomain;
 import kr.hsoft.boot.domain.UserDomain;
 import kr.hsoft.boot.dto.UserDTO;
 import kr.hsoft.boot.exception.AuthNotFoundException;
@@ -63,6 +67,23 @@ public class UserService {
 		userDomain.setGender(user.getGender());
 
 		return userDomain;
+	}
+	
+	
+	
+	public List<UserDomain> getUsers(PaginationDomain pagination) {
+		List<UserDTO> users = userMapper.selectUsers(pagination);
+		
+		List<UserDomain> userDomains = new ArrayList<UserDomain>();
+		
+		for(UserDTO user : users) {
+			UserDomain userDomain = new UserDomain();
+			userDomain.setUserID(user.getUserID());
+			
+			userDomains.add(userDomain);
+		}
+		
+		return userDomains;
 	}
 	
 	public void logout(String token) {
