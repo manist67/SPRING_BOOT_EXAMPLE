@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,17 +27,10 @@ public class UserController {
 	UserService userService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<?> getUsers(@RequestHeader HashMap<String, String> header ,@RequestParam @Nullable PaginationDomain pagination) {
-		if(header.get("token") == null) { 
-			
-		}
+	public ResponseEntity<?> getUsers(@RequestHeader HashMap<String, String> header, PaginationDomain pagination) {
+		
 		
 		// 권한 분배 이런 기타 잡다한일을 하는게 나을 것 같음
-		if(pagination == null) {
-			pagination = new PaginationDomain();
-			pagination.setPage(0);
-			pagination.setUnit(10);
-		}
 		
 		List<UserDomain> users = userService.getUsers(pagination);
 		

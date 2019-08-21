@@ -23,7 +23,6 @@ public class UserService {
 	
 	public List<UserDomain> getUsers(PaginationDomain pagination) {
 		List<UserDTO> users = userMapper.selectUsers(pagination);
-		
 		List<UserDomain> userDomains = new ArrayList<UserDomain>();
 		
 		for(UserDTO user : users) {

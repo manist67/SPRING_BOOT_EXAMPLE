@@ -52,6 +52,6 @@
 			`MODIFY` as `modify`,
 			AUTH as auth,
 			ENABLE as enable
-		FROM USER LIMIT #{page}, #{unit}
+		FROM USER LIMIT #{unit} OFFSET #{offset}
 	</select>
 </mapper>
