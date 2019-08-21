@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.hsoft.boot.domain.PaginationDomain;
 import kr.hsoft.boot.domain.UserDomain;
+import kr.hsoft.boot.exception.AuthNotFoundException;
+import kr.hsoft.boot.exception.UserNotFoundException;
+import kr.hsoft.boot.service.AuthService;
 import kr.hsoft.boot.service.UserService;
 
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,14 +29,27 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
+	@Autowired
+	AuthService authService;
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<?> getUsers(@RequestHeader HashMap<String, String> header, PaginationDomain pagination) {
+		String authLevel;
+
+		try {
+			authLevel = authService.getAuthLevel(header.get("token"));
+		} catch(AuthNotFoundException e) {
+			return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+		} catch(UserNotFoundException e) {
+			return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+		}
 		
-		
-		// 권한 분배 이런 기타 잡다한일을 하는게 나을 것 같음
-		
+		if(authLevel == "USER") return new ResponseEntity<>(null, HttpStatus.FORBIDDEN); 
+		/**
+		 * 이게맞는지 고민좀 해보자 현수야
+		 */
 		List<UserDomain> users = userService.getUsers(pagination);
-		
+
 		return new ResponseEntity<List<UserDomain>>(users, HttpStatus.OK);
 	}
 }
