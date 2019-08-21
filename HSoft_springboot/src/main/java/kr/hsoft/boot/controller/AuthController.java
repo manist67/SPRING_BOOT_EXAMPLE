@@ -27,9 +27,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value="/auth")
 public class AuthController {
 	@Autowired
-	UserService userService;
-	
-	@Autowired
 	AuthService authService;
 	
 	@RequestMapping(method=RequestMethod.GET)
@@ -41,7 +38,7 @@ public class AuthController {
 		
 		UserDomain user;
 		try {
-			user = userService.getUser(token);
+			user = authService.getUser(token);
 		} catch(UserNotFoundException e) {
 			return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
 		} catch(AuthNotFoundException e) {

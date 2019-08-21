@@ -21,35 +21,6 @@ public class UserService {
 	@Autowired
 	UserMapper userMapper;
 	
-	@Autowired
-	AuthMapper authMapper;
-
-	public UserDomain getUser(String token) throws UserNotFoundException, AuthNotFoundException{
-		AuthDomain auth = authMapper.selectToken(token);
-		if(auth == null) {
-			throw new AuthNotFoundException();
-		}
-		
-		UserDTO user = userMapper.selectUserBySeq(auth.getUserSeq());
-
-		if (user == null) {
-			throw new UserNotFoundException();
-		}
-		
-		UserDomain userDomain = new UserDomain();
-		userDomain.setSeq(user.getSeq());
-		userDomain.setUserID(user.getUserID());
-		userDomain.setAddress1(user.getAddress1());
-		userDomain.setAddress2(user.getAddress2());
-		userDomain.setPhone(user.getEmail());
-		userDomain.setEmail(user.getEmail());
-		userDomain.setGender(user.getGender());
-
-		return userDomain;
-	}
-	
-	
-	
 	public List<UserDomain> getUsers(PaginationDomain pagination) {
 		List<UserDTO> users = userMapper.selectUsers(pagination);
 		
