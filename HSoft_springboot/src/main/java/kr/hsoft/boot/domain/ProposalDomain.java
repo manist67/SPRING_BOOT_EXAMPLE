@@ -2,13 +2,17 @@ package kr.hsoft.boot.domain;
 
 import kr.hsoft.boot.domain.*;
 
-public class ProposalsDomain {
+public class ProposalDomain {
+	private int seq;
 	private String title;
-	private UserDomain user;
+	private int user;
 	private String category;
 	private String address1;
 	private String address2;
+	private String targetGender;
 	private String date;
+	private int minAge;
+	private int maxAge;
 	private int fee;
 	private int minParticipants;
 	private int maxParticipants;
@@ -17,16 +21,40 @@ public class ProposalsDomain {
 	private String create;
 	private String modify;
 	
+	public int getSeq() {
+		return seq;
+	}
+	public void setSeq(int seq) {
+		this.seq = seq;
+	}
+	public String getTargetGender() {
+		return targetGender;
+	}
+	public void setTargetGender(String targetGender) {
+		this.targetGender = targetGender;
+	}
+	public int getMinAge() {
+		return minAge;
+	}
+	public void setMinAge(int minAge) {
+		this.minAge = minAge;
+	}
+	public int getMaxAge() {
+		return maxAge;
+	}
+	public void setMaxAge(int maxAge) {
+		this.maxAge = maxAge;
+	}
 	public String getTitle() {
 		return title;
 	}
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public UserDomain getUser() {
+	public int getUser() {
 		return user;
 	}
-	public void setUser(UserDomain user) {
+	public void setUser(int user) {
 		this.user = user;
 	}
 	public String getCategory() {
