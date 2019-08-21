@@ -1,10 +1,12 @@
 package kr.hsoft.boot.dto;
 
 public class ProposalDTO {
+	private int seq;
 	private String title;
 	private int user;
 	private int minAge;
 	private int maxAge;
+	private String targetGender;
 	private String category;
 	private String address1;
 	private String address2;
@@ -17,6 +19,18 @@ public class ProposalDTO {
 	private Integer create;
 	private Integer modify;
 	
+	public int getSeq() {
+		return seq;
+	}
+	public void setSeq(int seq) {
+		this.seq = seq;
+	}
+	public String getTargetGender() {
+		return targetGender;
+	}
+	public void setTargetGender(String targetGender) {
+		this.targetGender = targetGender;
+	}
 	public String getTitle() {
 		return title;
 	}
