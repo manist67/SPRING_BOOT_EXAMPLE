@@ -19,8 +19,6 @@ import kr.hsoft.boot.domain.UserDomain;
 import kr.hsoft.boot.exception.AuthNotFoundException;
 import kr.hsoft.boot.exception.UserNotFoundException;
 import kr.hsoft.boot.service.AuthService;
-import kr.hsoft.boot.service.UserService;
-
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @RestController

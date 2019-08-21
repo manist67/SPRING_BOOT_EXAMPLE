@@ -1,7 +1,5 @@
 package kr.hsoft.boot.domain;
 
-import kr.hsoft.boot.domain.*;
-
 public class ProposalDomain {
 	private int seq;
 	private String title;
