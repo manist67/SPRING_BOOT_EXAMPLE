@@ -6,28 +6,7 @@
 	<select id="selectUserByIDandPassword" parameterType="kr.hsoft.boot.domain.LoginDomain" resultType="kr.hsoft.boot.dto.UserDTO">
 		SELECT * FROM USER limit 1
 	</select>
-
-	<insert id="createAuthToken" parameterType="kr.hsoft.boot.domain.AuthDomain">
-		INSERT INTO AUTH (USER_SEQ, TOKEN, RE_TOKEN, EXPIRE) VALUES (
-			#{userSeq}, #{token}, #{reToken}, #{expire}
-		)
-	</insert>
 	<select id="selectUserBySeq" parameterType="java.lang.Integer" resultType="kr.hsoft.boot.dto.UserDTO">
 		SELECT * FROM USER WHERE SEQ = #{seq}
-	</select>
-	
-	<select id="selectToken" parameterType="java.lang.String" resultType="kr.hsoft.boot.domain.AuthDomain">
-		SELECT 
-			SEQ AS seq,
-			USER_SEQ AS userSeq,
-			TOKEN AS token,
-			RE_TOKEN AS reToken,
-			EXPIRE AS expire,
-			`CREATE` as `create`
-		FROM AUTH 
-		WHERE
-			token = #{token} 
-			and 
-			(UNIX_TIMESTAMP(`create`) + expire) > UNIX_TIMESTAMP(NOW())
 	</select>
 </mapper>

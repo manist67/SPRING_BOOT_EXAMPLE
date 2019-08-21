@@ -9,12 +9,16 @@ import kr.hsoft.boot.domain.UserDomain;
 import kr.hsoft.boot.dto.UserDTO;
 import kr.hsoft.boot.exception.AuthNotFoundException;
 import kr.hsoft.boot.exception.UserNotFoundException;
+import kr.hsoft.boot.mapper.AuthMapper;
 import kr.hsoft.boot.mapper.UserMapper;
 
 @Service
 public class UserService {
 	@Autowired
 	UserMapper userMapper;
+	
+	@Autowired
+	AuthMapper authMapper;
 
 	public AuthDomain login(LoginDomain loginDomain) throws UserNotFoundException {
 		// TODO: encrypted the password
@@ -32,13 +36,13 @@ public class UserService {
 		authDomain.setReToken("asdfg");
 		authDomain.setExpire(3600);
 
-		userMapper.createAuthToken(authDomain);
+		authMapper.createAuthToken(authDomain);
 
 		return authDomain;
 	}
 
 	public UserDomain getUser(String token) throws UserNotFoundException, AuthNotFoundException{
-		AuthDomain auth = userMapper.selectToken(token);
+		AuthDomain auth = authMapper.selectToken(token);
 		if(auth == null) {
 			throw new AuthNotFoundException();
 		}
@@ -59,5 +63,10 @@ public class UserService {
 		userDomain.setGender(user.getGender());
 
 		return userDomain;
+	}
+	
+	public void logout(String token) {
+		authMapper.deleteToken(token);
+		return;
 	}
 }

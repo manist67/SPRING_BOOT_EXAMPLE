@@ -10,6 +10,4 @@ import kr.hsoft.boot.dto.UserDTO;
 public interface UserMapper {
 	public UserDTO selectUserByIDandPassword(LoginDomain loginDomain);
 	public UserDTO selectUserBySeq(Integer seq);
-	public void createAuthToken(AuthDomain authDomain);
-	public AuthDomain selectToken(String token);
 }

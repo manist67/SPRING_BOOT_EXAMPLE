@@ -62,4 +62,17 @@ public class AuthController {
 		
 		return new ResponseEntity<AuthDomain>(auth , HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/logout", method=RequestMethod.POST) 
+	public ResponseEntity<?> logout(@RequestHeader @Valid HashMap<String, String> header) {
+		String token = header.get("token");
+		if(token == null) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+		
+		userService.logout(header.get("token"));
+		return new ResponseEntity<>(null, HttpStatus.OK);
+	}
+	
+	
 }
