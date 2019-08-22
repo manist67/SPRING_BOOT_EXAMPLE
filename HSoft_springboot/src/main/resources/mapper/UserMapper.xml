@@ -19,7 +19,8 @@
 			AUTH as auth,
 			ENABLE as enable,
 			LOCATION as `location`
-		FROM USER limit 1
+		FROM USER 
+		WHERE USER_ID = #{id} AND PASSWORD = #{password}
 	</select>
 	<select id="selectUserBySeq" parameterType="java.lang.Integer" resultType="kr.hsoft.boot.dto.UserDTO">
 		SELECT 

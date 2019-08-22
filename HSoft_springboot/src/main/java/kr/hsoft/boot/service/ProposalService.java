@@ -13,6 +13,7 @@ import kr.hsoft.boot.domain.ProposalWriteDomain;
 import kr.hsoft.boot.domain.UserDomain;
 import kr.hsoft.boot.dto.ProposalDTO;
 import kr.hsoft.boot.dto.UserDTO;
+import kr.hsoft.boot.mapper.CategoryMapper;
 import kr.hsoft.boot.mapper.ProposalMapper;
 import kr.hsoft.boot.mapper.UserMapper;
 
@@ -21,6 +22,8 @@ import kr.hsoft.boot.mapper.UserMapper;
 public class ProposalService{
 	@Autowired
 	ProposalMapper proposalMapper;
+	@Autowired
+	CategoryMapper categoryMapper;
 	
 	@Autowired
 	UserMapper userMapper;
@@ -64,8 +67,7 @@ public class ProposalService{
 			proposalDomain.setSeq(proposal.getSeq());
 			proposalDomain.setTitle(proposal.getTitle());
 			proposalDomain.setUser(writer);
-			// TODO: set category
-			proposalDomain.setCategory("");
+			proposalDomain.setCategory(categoryMapper.getCategory(proposal.getCategory()));
 			proposalDomain.setAddress1(proposal.getAddress1());
 			proposalDomain.setAddress2(proposal.getAddress2());
 			proposalDomain.setTargetGender(proposal.getTargetGender());
@@ -105,10 +107,7 @@ public class ProposalService{
 		proposalDomain.setSeq(proposal.getSeq());
 		proposalDomain.setTitle(proposal.getTitle());
 		proposalDomain.setUser(writer);
-		
-		proposalDomain.setCategory("");
-		//TODO: get category in table
-		
+		proposalDomain.setCategory(categoryMapper.getCategory(proposal.getCategory()));
 		proposalDomain.setAddress1(proposal.getAddress1());
 		proposalDomain.setAddress2(proposal.getAddress2());
 		proposalDomain.setTargetGender(proposal.getTargetGender());

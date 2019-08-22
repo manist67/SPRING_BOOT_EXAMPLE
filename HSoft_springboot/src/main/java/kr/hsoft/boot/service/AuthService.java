@@ -1,5 +1,7 @@
 package kr.hsoft.boot.service;
 
+import java.security.SecureRandom;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,7 @@ import kr.hsoft.boot.exception.AuthNotFoundException;
 import kr.hsoft.boot.exception.UserNotFoundException;
 import kr.hsoft.boot.mapper.AuthMapper;
 import kr.hsoft.boot.mapper.UserMapper;
+import kr.hsoft.boot.utils.SHA256;
 
 @Service
 public class AuthService {
@@ -21,8 +24,8 @@ public class AuthService {
 	AuthMapper authMapper;
 
 	public AuthDomain login(LoginDomain loginDomain) throws UserNotFoundException {
-		// TODO: encrypted the password
-
+		loginDomain.setPassword(SHA256.sha256(loginDomain.getPassword()));
+		
 		UserDTO user = userMapper.selectUserByIDandPassword(loginDomain);
 
 		if (user == null) {
@@ -30,10 +33,16 @@ public class AuthService {
 		}
 
 		AuthDomain authDomain = new AuthDomain();
+		
+		SecureRandom random = new SecureRandom();
+		byte bytes[] = new byte[256];
+		random.nextBytes(bytes);
+		String token = bytes.toString();
 
 		authDomain.setUserSeq(user.getSeq());
-		authDomain.setToken("asdf");
-		authDomain.setReToken("asdfg");
+		authDomain.setToken(token);
+		//TODO: RETOKEN
+		authDomain.setReToken(token);
 		authDomain.setExpire(3600);
 
 		authMapper.createAuthToken(authDomain);
@@ -95,23 +104,14 @@ public class AuthService {
 	}
 	
 	public Boolean validateId(String id) {
-		if(authMapper.validateId(id) == 0)
-			return false;
-		else
-			return true;
+		return authMapper.validateId(id) == 0;
 	}
 	
 	public Boolean validatePhone(String phone) {
-		if(authMapper.validatePhone(phone) == 0)
-			return false;
-		else
-			return true;
+		return authMapper.validatePhone(phone) == 0;
 	}
 	
 	public Boolean validateNickname(String nickname) {
-		if(authMapper.validateNickname(nickname) == 0)
-			return false;
-		else
-			return true;
+		return authMapper.validateNickname(nickname) == 0;
 	}
 }

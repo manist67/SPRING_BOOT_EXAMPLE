@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -28,6 +29,7 @@ public class AuthController {
 	@Autowired
 	AuthService authService;
 
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<?> getUserInfo(@RequestHeader HashMap<String, String> header) {
 		String token = header.get("token");
@@ -47,6 +49,7 @@ public class AuthController {
 		return new ResponseEntity<UserDomain>(user, HttpStatus.OK);
 	}
 	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value="/login", method=RequestMethod.POST) 
 	public ResponseEntity<?> login(@RequestBody @Valid LoginDomain loginInfo, Errors error){
 		if(error.hasErrors()) {
@@ -63,6 +66,7 @@ public class AuthController {
 		return new ResponseEntity<AuthDomain>(auth , HttpStatus.OK);
 	}
 	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value="/logout", method=RequestMethod.POST) 
 	public ResponseEntity<?> logout(@RequestHeader @Valid HashMap<String, String> header) {
 		String token = header.get("token");
@@ -74,18 +78,35 @@ public class AuthController {
 		return new ResponseEntity<>(null, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value= "/{id}", method = RequestMethod.POST)
-	public ResponseEntity<?> validateId(@PathVariable("id") String id){
-		return new ResponseEntity<>(authService.validateId(id), HttpStatus.OK);
+	@RequestMapping(value= "/validator", method = RequestMethod.GET)
+	public ResponseEntity<?> validateId(String value, String flag) {
+		if(value == null ) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
+		Boolean isDuplicate;
+		switch(flag) {
+		case "id":
+			isDuplicate = authService.validateId(value);
+			break;
+		case "phone":
+			isDuplicate = authService.validatePhone(value);
+			break;
+		case "nickname":
+			isDuplicate = authService.validateNickname(value);
+			break;
+		default:
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(isDuplicate, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value= "/{phone}", method = RequestMethod.POST)
+	/*
+	@RequestMapping(value= "/{phone}", method = RequestMethod.GET)
 	public ResponseEntity<?> validatePhone(@PathVariable("phone") String phone){
 		return new ResponseEntity<>(authService.validatePhone(phone), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value= "/{nickname}", method = RequestMethod.POST)
+	@RequestMapping(value= "/{nickname}", method = RequestMethod.GET)
 	public ResponseEntity<?> validateNickname(@PathVariable("nickname") String nickname){
 		return new ResponseEntity<>(authService.validateNickname(nickname), HttpStatus.OK);
-	}
+	}*/
 }
