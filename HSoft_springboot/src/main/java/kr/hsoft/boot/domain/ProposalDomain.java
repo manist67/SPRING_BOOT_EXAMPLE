@@ -1,5 +1,7 @@
 package kr.hsoft.boot.domain;
 
+import java.sql.Date;
+
 import org.springframework.boot.jackson.JsonComponent;
 import kr.hsoft.boot.domain.*;
 
@@ -12,7 +14,7 @@ public class ProposalDomain {
 	private String address1;
 	private String address2;
 	private String targetGender;
-	private String date;
+	private Date date;
 	private int minAge;
 	private int maxAge;
 	private int fee;
@@ -77,10 +79,10 @@ public class ProposalDomain {
 	public void setAddress2(String address2) {
 		this.address2 = address2;
 	}
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 	public int getFee() {

@@ -7,12 +7,12 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.*;
 
 import kr.hsoft.boot.domain.ProposalDomain;
+import kr.hsoft.boot.domain.UserDomain;
 import kr.hsoft.boot.exception.AuthNotFoundException;
 import kr.hsoft.boot.exception.UserNotFoundException;
 import kr.hsoft.boot.service.AuthService;
@@ -30,10 +30,17 @@ public class ProposalsController {
 		
 	@RequestMapping(value= "/{seq}", method = RequestMethod.GET)
 	@CrossOrigin("http://localhost:3000")
-	public ResponseEntity<?> getProposal(@PathVariable("seq") int seq) {
+	public ResponseEntity<?> getProposal(@RequestHeader @Valid HashMap<String, String> header, @PathVariable("seq") int seq) throws UserNotFoundException, AuthNotFoundException {
+		String token = header.get("token");
+		if(token == null) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
 		
-		ProposalDomain proposal = proposalService.getProposal(seq);
+		UserDomain user = authService.getUser(token);
+		
+		ProposalDomain proposal = proposalService.getProposal(seq, user);
 		return new ResponseEntity<ProposalDomain>(proposal, HttpStatus.OK);
+		
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
@@ -72,15 +79,38 @@ public class ProposalsController {
 	@RequestMapping(method = RequestMethod.POST)
 	@CrossOrigin("http://localhostL:3000")
 	public ResponseEntity<?> postProposal(@RequestHeader @Valid HashMap<String, String> header, 
-			@RequestBody ProposalDomain proposalDomain){
+			@RequestBody ProposalDomain proposalDomain) throws UserNotFoundException, AuthNotFoundException{
 		String token = header.get("token");
 		if(token == null) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 		
-		proposalService.postProposal(header.get("token"), proposalDomain);
+		UserDomain userDomain = authService.getUser(token);
+		
+		proposalService.postProposal(userDomain, proposalDomain);
 		return new ResponseEntity<>(null, HttpStatus.OK);
 		
 	}
+	
+	@RequestMapping(value= "/{seq}", method = RequestMethod.PUT)
+	@CrossOrigin("http://localhostL:3000")
+	public ResponseEntity<?> putProposal(@RequestHeader @Valid HashMap<String, String> header, 
+			@RequestBody ProposalDomain proposalDomain, @PathVariable("seq") int seq) throws UserNotFoundException, AuthNotFoundException{
+		String token = header.get("token");
+		if(token == null) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	
+		UserDomain userDomain = authService.getUser(token);
+		
+		// 권한이랑 상관 없을 듯
+		if(authService.getUser(token) == proposalService.getProposal(seq, userDomain).getUser()) {
+			proposalService.putProposal(proposalDomain);
+			return new ResponseEntity<>(null, HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+	}
+	
 
 }

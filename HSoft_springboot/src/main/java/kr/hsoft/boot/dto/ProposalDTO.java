@@ -1,5 +1,7 @@
 package kr.hsoft.boot.dto;
 
+import java.sql.Date;
+
 public class ProposalDTO {
 	private int seq;
 	private String title;
@@ -10,7 +12,7 @@ public class ProposalDTO {
 	private String category;
 	private String address1;
 	private String address2;
-	private String date;
+	private Date date;
 	private int fee;
 	private int minParticipants;
 	private int maxParticipants;
@@ -55,10 +57,10 @@ public class ProposalDTO {
 	public void setAddress2(String address2) {
 		this.address2 = address2;
 	}
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 	public int getFee() {

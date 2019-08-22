@@ -9,7 +9,10 @@ import kr.hsoft.boot.dto.ProposalDTO;
 @Mapper
 public interface ProposalMapper {
 	public List<ProposalDTO> selectProposals();
-	public ProposalDTO selectProposalBySeq(int seq);
-	public void postProposal(String token);
+	public ProposalDTO selectProposalForUser(int seq);
+	public ProposalDTO selectProposalForAdmin(int seq);
+	public ProposalDTO selectProposalForMaster(int seq);
+	public void insertProposal(ProposalDTO proposalDTO);
+	public void putProposal(ProposalDTO proposalDTO);
 
 }
