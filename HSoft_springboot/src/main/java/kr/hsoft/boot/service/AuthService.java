@@ -35,7 +35,7 @@ public class AuthService {
 		AuthDomain authDomain = new AuthDomain();
 		
 		SecureRandom random = new SecureRandom();
-		byte bytes[] = new byte[256];
+		byte bytes[] = new byte[1000];
 		random.nextBytes(bytes);
 		String token = bytes.toString();
 

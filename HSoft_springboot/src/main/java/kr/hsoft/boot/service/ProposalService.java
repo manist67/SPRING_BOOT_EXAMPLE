@@ -8,6 +8,7 @@ import javax.security.auth.message.AuthException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.hsoft.boot.domain.PaginationDomain;
 import kr.hsoft.boot.domain.ProposalReadDomain;
 import kr.hsoft.boot.domain.ProposalWriteDomain;
 import kr.hsoft.boot.domain.UserDomain;
@@ -30,7 +31,7 @@ public class ProposalService{
 	
 	
 	
-	public List<ProposalReadDomain> getProposals(UserDomain userDomain) throws AuthException{
+	public List<ProposalReadDomain> getProposals(UserDomain userDomain, PaginationDomain paginationDomain) throws AuthException{
 		
 		String location = userDomain.getLocation();
 		String authLevel = userDomain.getAuth();
@@ -38,7 +39,8 @@ public class ProposalService{
 		List<ProposalDTO> proposals;
 		
 		if(authLevel.equals("USER")) {
-			proposals = proposalMapper.selectProposalsForUser(location);
+			proposals = proposalMapper.selectProposalsForUser(location, paginationDomain);
+			paginationDomain.setTotal(proposalMapper.countProposalsForUser(location));
 		}else if(authLevel.equals("ADMIN")) {
 			proposals = proposalMapper.selectProposals();
 		}else if(authLevel.equals("MASTER")) {

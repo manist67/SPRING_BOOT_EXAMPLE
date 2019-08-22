@@ -7,12 +7,20 @@
 		SELECT * FROM PROPOSAL
 	</select>
 	
-	<select id="selectProposalsForUser" parameterType="java.lang.String" resultType="kr.hsoft.boot.dto.ProposalDTO">
+	<select id="countProposalsForUser" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM PROPOSAL
+		JOIN USER 
+		ON USER.SEQ = PROPOSAL.USER
+		WHERE USER.LOCATION = #{location}
+			AND STATUS = 1
+	</select>
+	<select id="selectProposalsForUser" resultType="kr.hsoft.boot.dto.ProposalDTO">
 		SELECT PROPOSAL.*, USER.LOCATION FROM PROPOSAL
 		JOIN USER 
 		ON USER.SEQ = PROPOSAL.USER
 		WHERE LOCATION = #{location}
 			AND STATUS = 1
+		LIMIT #{pagination.unit} OFFSET #{pagination.offset}
 	</select>
 
 	<select id="selectProposalsForMaster" parameterType="java.lang.String" resultType="kr.hsoft.boot.dto.ProposalDTO">

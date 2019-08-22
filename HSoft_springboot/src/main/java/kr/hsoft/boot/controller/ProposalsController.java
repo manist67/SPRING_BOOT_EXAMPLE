@@ -7,6 +7,7 @@ import javax.security.auth.message.AuthException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import kr.hsoft.boot.domain.ApplicationDomain;
 import kr.hsoft.boot.domain.ApplicationWriteDomain;
+import kr.hsoft.boot.domain.PaginationDomain;
 import kr.hsoft.boot.domain.ProposalReadDomain;
 import kr.hsoft.boot.domain.ProposalWriteDomain;
 import kr.hsoft.boot.domain.UserDomain;
@@ -95,23 +97,37 @@ public class ProposalsController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	@CrossOrigin("http://localhost:3000")
-	public ResponseEntity<?> getProposals(@RequestHeader @Valid HashMap<String, String> header) throws UserNotFoundException, AuthNotFoundException {
+	public ResponseEntity<?> getProposals(
+			@RequestHeader @Valid HashMap<String, String> header, 
+			PaginationDomain pagination) {
 		// 토큰 확인
 		String token = header.get("token");
 		if(token == null) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 
-		UserDomain user = authService.getUser(token);
+		UserDomain user;
+		try {
+			user = authService.getUser(token);
+		} catch (UserNotFoundException e1) {
+			return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+		} catch (AuthNotFoundException e1) {
+			return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+		}
 		
 		List<ProposalReadDomain> proposals;
 		try {
-			proposals = proposalService.getProposals(user);			
+			proposals = proposalService.getProposals(user, pagination);			
 		} catch( AuthException e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
+		
+		HttpHeaders ReponseHeader = new HttpHeaders();
+		ReponseHeader.set("X-PAGE", Integer.toString(pagination.getPage()));
+		ReponseHeader.set("X-TOTAL", Integer.toString(pagination.getTotal()));
+		ReponseHeader.set("X-UNIT", Integer.toString(pagination.getUnit()));
 
-		return new ResponseEntity<List<ProposalReadDomain>>(proposals, HttpStatus.OK);
+		return new ResponseEntity<List<ProposalReadDomain>>(proposals, ReponseHeader, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
