@@ -86,7 +86,7 @@ public class ProposalService{
 	
 	public ProposalReadDomain getProposal(int seq) {
 		
-		ProposalDTO proposal = new ProposalDTO();
+		ProposalDTO proposal = proposalMapper.selectProposal(seq);
 		
 		UserDTO user = userMapper.selectUserBySeq(proposal.getUser());
 		UserDomain writer = new UserDomain();
@@ -134,7 +134,7 @@ public class ProposalService{
 		proposalDTO.setDate(proposalDomain.getDate());
 		proposalDTO.setFee(proposalDomain.getFee());
 		proposalDTO.setMinParticipants(proposalDomain.getMinParticipants());
-		proposalDTO.setMaxParticipants(proposalDomain.getMaxAge());
+		proposalDTO.setMaxParticipants(proposalDomain.getMaxParticipants());
 		proposalDTO.setRequirements(proposalDomain.getRequirements());
 		proposalDTO.setContents(proposalDomain.getContents());	
 		proposalDTO.setUser(user.getSeq());

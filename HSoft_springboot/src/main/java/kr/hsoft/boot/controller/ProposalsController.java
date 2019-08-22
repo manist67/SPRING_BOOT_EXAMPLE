@@ -33,14 +33,7 @@ public class ProposalsController {
 		
 	@RequestMapping(value= "/{seq}", method = RequestMethod.GET)
 	@CrossOrigin("http://localhost:3000")
-	public ResponseEntity<?> getProposal(@RequestHeader @Valid HashMap<String, String> header, @PathVariable("seq") int seq) throws UserNotFoundException, AuthNotFoundException {
-		String token = header.get("token");
-		if(token == null) {
-			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-		}
-		
-		UserDomain user = authService.getUser(token);
-
+	public ResponseEntity<?> getProposal(@RequestHeader @Valid HashMap<String, String> header, @PathVariable("seq") int seq) {
 		ProposalReadDomain proposal = proposalService.getProposal(seq);
 		return new ResponseEntity<ProposalReadDomain>(proposal, HttpStatus.OK);
 	}
@@ -67,7 +60,7 @@ public class ProposalsController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	@CrossOrigin("http://localhostL:3000")
+	@CrossOrigin("http://localhost:3000")
 	public ResponseEntity<?> postProposal(@RequestHeader HashMap<String, String> header, 
 			@RequestBody @Valid ProposalWriteDomain proposalDomain, Errors errors) throws UserNotFoundException, AuthNotFoundException{
 		if(errors.hasErrors()) {
@@ -76,7 +69,7 @@ public class ProposalsController {
 		
 		String token = header.get("token");
 		if(token == null) {
-			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
 		}
 		
 		UserDomain userDomain = authService.getUser(token);
@@ -87,7 +80,7 @@ public class ProposalsController {
 	}
 	
 	@RequestMapping(value= "/{seq}", method = RequestMethod.PUT)
-	@CrossOrigin("http://localhostL:3000")
+	@CrossOrigin("http://localhost:3000")
 	public ResponseEntity<?> putProposal(@RequestHeader @Valid HashMap<String, String> header, 
 			@RequestBody ProposalWriteDomain proposalDomain, @PathVariable("seq") int seq) throws UserNotFoundException, AuthNotFoundException{
 		String token = header.get("token");
@@ -114,7 +107,7 @@ public class ProposalsController {
 	}
 	
 	@RequestMapping(value= "/{seq}", method = RequestMethod.DELETE)
-	@CrossOrigin("http://localhostL:3000")
+	@CrossOrigin("http://localhost:3000")
 	public ResponseEntity<?> deleteProposal(@RequestHeader @Valid HashMap<String, String> header, 
 			@PathVariable("seq") int seq) throws UserNotFoundException, AuthNotFoundException{
 		String token = header.get("token");
