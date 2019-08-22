@@ -1,8 +1,6 @@
 package kr.hsoft.boot.domain;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.boot.jackson.JsonComponent;

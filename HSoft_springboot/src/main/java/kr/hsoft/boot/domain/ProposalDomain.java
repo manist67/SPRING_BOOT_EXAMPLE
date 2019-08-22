@@ -1,7 +1,6 @@
 package kr.hsoft.boot.domain;
 
 import org.springframework.boot.jackson.JsonComponent;
-import kr.hsoft.boot.domain.*;
 
 @JsonComponent
 public class ProposalDomain {

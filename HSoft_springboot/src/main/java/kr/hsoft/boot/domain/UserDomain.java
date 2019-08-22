@@ -2,8 +2,6 @@ package kr.hsoft.boot.domain;
 
 import java.sql.Timestamp;
 
-import javax.validation.constraints.Min;
-
 import org.springframework.boot.jackson.JsonComponent;
 
 @JsonComponent
