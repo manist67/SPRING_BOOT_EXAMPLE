@@ -13,6 +13,7 @@ import kr.hsoft.boot.domain.UserDomain;
 import kr.hsoft.boot.dto.ProposalDTO;
 import kr.hsoft.boot.dto.UserDTO;
 import kr.hsoft.boot.exception.SignUpErrorException;
+import kr.hsoft.boot.mapper.CategoryMapper;
 import kr.hsoft.boot.mapper.ProposalMapper;
 import kr.hsoft.boot.mapper.UserMapper;
 import kr.hsoft.boot.utils.SHA256;
@@ -21,6 +22,9 @@ import kr.hsoft.boot.utils.SHA256;
 public class UserService {
 	@Autowired
 	UserMapper userMapper;
+	
+	@Autowired
+	CategoryMapper categoryMapper;
 	
 	@Autowired
 	ProposalMapper proposalMapper;
@@ -100,8 +104,7 @@ public class UserService {
 			proposalDomain.setSeq(proposal.getSeq());
 			proposalDomain.setTitle(proposal.getTitle());
 			proposalDomain.setUser(writer);
-			//TODO: SET CATEGORY BY CATEGORY TABLE
-			proposalDomain.setCategory("");
+			proposalDomain.setCategory(categoryMapper.getCategory(proposal.getCategory()));
 			proposalDomain.setAddress1(proposal.getAddress1());
 			proposalDomain.setAddress2(proposal.getAddress2());
 			proposalDomain.setTargetGender(proposal.getTargetGender());
