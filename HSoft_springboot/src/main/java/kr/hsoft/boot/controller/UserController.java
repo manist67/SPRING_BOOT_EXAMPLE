@@ -3,16 +3,22 @@ package kr.hsoft.boot.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.hsoft.boot.domain.PaginationDomain;
+import kr.hsoft.boot.domain.SignUpDomain;
 import kr.hsoft.boot.domain.UserDomain;
 import kr.hsoft.boot.exception.AuthNotFoundException;
+import kr.hsoft.boot.exception.SignUpErrorException;
 import kr.hsoft.boot.exception.UserNotFoundException;
 import kr.hsoft.boot.service.AuthService;
 import kr.hsoft.boot.service.UserService;
@@ -47,6 +53,22 @@ public class UserController {
 		List<UserDomain> users = userService.getUsers(pagination);
 
 		return new ResponseEntity<List<UserDomain>>(users, HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<?> postUser(@RequestBody @Valid SignUpDomain signUpDomain, Errors errors) {
+		if(errors.hasErrors()) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+		
+		try {
+			userService.postUsers(signUpDomain);
+		} catch (SignUpErrorException e) {
+			System.out.println(e.getErrorInfo());
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<>(null, HttpStatus.OK);
 	}
 }
 
