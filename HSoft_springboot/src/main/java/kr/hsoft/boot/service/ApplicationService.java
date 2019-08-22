@@ -39,6 +39,24 @@ public class ApplicationService {
 		return resultDomain;
 	}
 	
+	public List<ApplicationDomain> getApplicationsByProposal(int seq){
+		List<ApplicationDTO> dbData = applicationMapper.getApplicationsByProposal(seq);
+		List<ApplicationDomain> results = new ArrayList<>();
+		
+		for(ApplicationDTO dtoDatum: dbData) {
+			ApplicationDomain domainDatum = new ApplicationDomain();
+			
+			domainDatum.setSeq(dtoDatum.getSeq());
+			//domainDatum.setUser(dtoDatum.getUser());
+			domainDatum.setEnable(dtoDatum.getEnable());
+			domainDatum.setContents(dtoDatum.getContents());
+			domainDatum.setChildrenCount(dtoDatum.getChildrenCount());
+			
+			results.add(domainDatum);
+		}
+		return results;
+	}
+	
 	public ApplicationDomain getApplication(int seq, UserDomain user) throws ApplicationNotFoundException, AuthenticationException {
 		ApplicationDTO detailDTO = applicationMapper.getApplication(seq);
 		

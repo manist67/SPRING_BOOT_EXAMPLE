@@ -16,6 +16,7 @@ import kr.hsoft.boot.dto.UserDTO;
 import kr.hsoft.boot.mapper.ProposalMapper;
 import kr.hsoft.boot.mapper.UserMapper;
 
+
 @Service
 public class ProposalService{
 	@Autowired
@@ -23,6 +24,7 @@ public class ProposalService{
 	
 	@Autowired
 	UserMapper userMapper;
+	
 	
 	
 	public List<ProposalReadDomain> getProposals(UserDomain userDomain) throws AuthException{
@@ -69,7 +71,10 @@ public class ProposalService{
 			proposalDomain.setTargetGender(proposal.getTargetGender());
 			proposalDomain.setDate(proposal.getDate());
 			proposalDomain.setMinAge(proposal.getMinAge());
+			
+			//bug
 			proposalDomain.setMaxAge(proposal.getMaxAge());
+			
 			proposalDomain.setFee(proposal.getFee());
 			proposalDomain.setMinParticipants(proposal.getMinParticipants());
 			proposalDomain.setMaxParticipants(proposal.getMaxParticipants());

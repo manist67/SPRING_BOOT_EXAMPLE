@@ -8,4 +8,7 @@
 	<select id="getApplication" parameterType="java.lang.Integer" resultType="kr.hsoft.boot.dto.ApplicationDTO">
 			SELECT * FROM APPLICATION WHERE SEQ = #{seq} LIMIT 1
 	</select>
+	<select id="getApplicationsByProposal" parameterType="java.lang.Integer" resultType="kr.hsoft.boot.dto.ApplicationDTO">
+			SELECT * FROM APPLICATION WHERE PROPOSAL = #{seq}
+	</select>
 </mapper>
