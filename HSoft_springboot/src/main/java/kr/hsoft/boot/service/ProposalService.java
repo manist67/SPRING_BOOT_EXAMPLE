@@ -71,7 +71,6 @@ public class ProposalService{
 		ProposalDTO proposal = new ProposalDTO();
 		
 		String authLevel = userDomain.getAuth();
-		//String location = user.getLocation();
 		
 		if(authLevel == "USER") {
 			proposal = proposalMapper.selectProposalForUser(seq);
