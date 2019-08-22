@@ -4,6 +4,8 @@ import java.sql.Date;
 
 import org.springframework.boot.jackson.JsonComponent;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @JsonComponent
 public class ProposalDomain {
 	private int seq;
@@ -13,6 +15,7 @@ public class ProposalDomain {
 	private String address1;
 	private String address2;
 	private String targetGender;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date date;
 	private int minAge;
 	private int maxAge;

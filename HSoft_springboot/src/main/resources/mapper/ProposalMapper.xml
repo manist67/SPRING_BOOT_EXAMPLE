@@ -13,13 +13,13 @@
 	
 	<insert id="insertProposal" parameterType="kr.hsoft.boot.dto.ProposalDTO">
 		insert into PROPOSAL ( 
-			TITLE, `USER`, CATEGORY, ADDRESS1, ADDRESS2, 
-			TARGET_GENDER, `DATE`, FEE, MIN_PARTICIPANTS, 
+			TITLE, `USER`, CATEGORY, MIN_AGE, MAX_AGE,
+			ADDRESS1, ADDRESS2, TARGET_GENDER, `DATE`, FEE, MIN_PARTICIPANTS, 
 			MAX_PARTICIPANTS, REQUIREMENTS, CONTENTS
 		) values (
-			#{title}, #{user}, #{category}, #{address1}, #{address2},
-			#{targetGender}, #{date}, #{fee}, #{minParticipants}, 
-			#{maxParticipants}, #{requirements}, #{contents}
+			#{title}, #{user}, #{category}, #{minAge}, #{maxAge}, 
+			#{address1}, #{address2}, #{targetGender}, #{date}, 
+			#{fee}, #{minParticipants}, #{maxParticipants}, #{requirements}, #{contents}
 		)
 	</insert>
 </mapper>

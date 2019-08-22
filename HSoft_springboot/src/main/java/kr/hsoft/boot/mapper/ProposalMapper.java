@@ -9,10 +9,10 @@ import kr.hsoft.boot.dto.ProposalDTO;
 @Mapper
 public interface ProposalMapper {
 	public List<ProposalDTO> selectProposals();
-	public ProposalDTO selectProposalForUser(int seq);
+	public ProposalDTO selectProposalForUser(int seq, String location);
+	public ProposalDTO selectProposalForMaster(int seq, String location);
 	public ProposalDTO selectProposalForAdmin(int seq);
-	public ProposalDTO selectProposalForMaster(int seq);
 	public void insertProposal(ProposalDTO proposalDTO);
 	public void putProposal(ProposalDTO proposalDTO);
-
+	public void putProposalState();
 }

@@ -69,15 +69,16 @@ public class ProposalService{
 	public ProposalDomain getProposal(int seq, UserDomain userDomain) {
 		
 		ProposalDTO proposal = new ProposalDTO();
+		String location = userDomain.getLocation();
 		
 		String authLevel = userDomain.getAuth();
 		
 		if(authLevel == "USER") {
-			proposal = proposalMapper.selectProposalForUser(seq);
+			proposal = proposalMapper.selectProposalForUser(seq, location);
 		}else if(authLevel == "ADMIN") {
 			proposal = proposalMapper.selectProposalForAdmin(seq);
 		}else if(authLevel == "MASTER") {
-			proposal = proposalMapper.selectProposalForMaster(seq);
+			proposal = proposalMapper.selectProposalForMaster(seq, location);
 		}
 		
 		UserDTO user = userMapper.selectUserBySeq(proposal.getUser());
@@ -154,6 +155,10 @@ public class ProposalService{
 		proposalDTO.setContents(proposalDomain.getContents());
 		
 		proposalMapper.putProposal(proposalDTO);
+	}
+	
+	public void putProposalState() {
+		proposalMapper.putProposalState();
 	}
 	
 	
