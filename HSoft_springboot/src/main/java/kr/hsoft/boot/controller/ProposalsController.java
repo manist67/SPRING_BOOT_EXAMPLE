@@ -39,42 +39,26 @@ public class ProposalsController {
 		
 		UserDomain user = authService.getUser(token);
 		
-		ProposalDomain proposal = proposalService.getProposal(seq, user);
+		ProposalDomain proposal = proposalService.getProposal(seq);
 		return new ResponseEntity<ProposalDomain>(proposal, HttpStatus.OK);
 		
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
 	@CrossOrigin("http://localhost:3000")
-	public ResponseEntity<?> getProposals(@RequestHeader @Valid HashMap<String, String> header) {
+	public ResponseEntity<?> getProposals(@RequestHeader @Valid HashMap<String, String> header) throws UserNotFoundException, AuthNotFoundException {
 		// 토큰 확인
 		String token = header.get("token");
 		if(token == null) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 		
-		// 권한 확인
-		String authLevel;
-		try {
-			authLevel = authService.getAuthLevel(header.get("token"));
-		} catch(AuthNotFoundException e) {
-			return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
-		} catch(UserNotFoundException e) {
-			return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
-		}
+		UserDomain user = authService.getUser(token);
 		
-		if(authLevel == "MASTER") {
-			// 지역구만 받아오기
-			List<ProposalDomain> proposals = proposalService.getProposals();
-			return new ResponseEntity<List<ProposalDomain>>(proposals, HttpStatus.OK);
-		}else if(authLevel == "ADMIN") {
-			List<ProposalDomain> proposals = proposalService.getProposals();
-			return new ResponseEntity<List<ProposalDomain>>(proposals, HttpStatus.OK);
+		List<ProposalDomain> proposals = proposalService.getProposals(user);
+		return new ResponseEntity<List<ProposalDomain>>(proposals, HttpStatus.OK);
 			
-		}else { // user
-			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-
-		}
+	
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
@@ -110,14 +94,14 @@ public class ProposalsController {
 		String authLevel =  userDomain.getAuth();
 		
 		if(authLevel == "USER"
-				&& authService.getUser(token) == proposalService.getProposal(seq, userDomain).getUser()) {
+				&& authService.getUser(token) == proposalService.getProposal(seq).getUser()) {
 			proposalService.putProposal(proposalDomain);
 			return new ResponseEntity<>(null, HttpStatus.OK);
 		}else if(authLevel == "ADMIN") {
 			proposalService.putProposal(proposalDomain);
 			return new ResponseEntity<>(null, HttpStatus.OK);
 		}else if(authLevel == "MASTER"
-				&& authService.getUser(token).getLocation() == proposalService.getProposal(seq, userDomain).getUser().getLocation()) {
+				&& authService.getUser(token).getLocation() == proposalService.getProposal(seq).getUser().getLocation()) {
 			proposalService.putProposalState();
 		}
 		
