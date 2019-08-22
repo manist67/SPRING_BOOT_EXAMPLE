@@ -7,7 +7,7 @@ public class ApplicationDomain {
 	private String contents;
 	private int childrenCount;
 	private int enable;
-	
+
 	public int getSeq() {
 		return seq;
 	}

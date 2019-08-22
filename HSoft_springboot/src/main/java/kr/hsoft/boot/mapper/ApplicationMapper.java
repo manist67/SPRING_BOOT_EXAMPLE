@@ -10,6 +10,6 @@ import kr.hsoft.boot.dto.ApplicationDTO;
 public interface ApplicationMapper {
 	void insertApplication(ApplicationDTO applicationDTO);
 	void updateApplication(ApplicationDTO applicationDTO);
-	List<ApplicationDTO> getApplications();
-	ApplicationDTO getApplication(int seq);
+	List<ApplicationDTO> getApplications(int userID);
+	ApplicationDTO getApplication(int seq);//seq에 해당하는 신청
 }

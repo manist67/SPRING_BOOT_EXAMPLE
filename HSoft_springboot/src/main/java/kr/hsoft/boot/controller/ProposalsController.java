@@ -40,7 +40,7 @@ public class ProposalsController {
 		}
 		
 		UserDomain user = authService.getUser(token);
-		
+
 		ProposalReadDomain proposal = proposalService.getProposal(seq);
 		return new ResponseEntity<ProposalReadDomain>(proposal, HttpStatus.OK);
 	}

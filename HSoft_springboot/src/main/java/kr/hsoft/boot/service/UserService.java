@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.hsoft.boot.domain.PaginationDomain;
-import kr.hsoft.boot.domain.ProposalDomain;
+import kr.hsoft.boot.domain.ProposalReadDomain;
 import kr.hsoft.boot.domain.SignUpDomain;
 import kr.hsoft.boot.domain.UserDomain;
 import kr.hsoft.boot.dto.ProposalDTO;
@@ -78,11 +78,11 @@ public class UserService {
 		userMapper.insertUser(userDTO);
 	}
 	
-	public List<ProposalDomain> getUserProposals(int seq){
+	public List<ProposalReadDomain> getUserProposals(int seq){
 		// seq는 user의 seq임
 		List<ProposalDTO> proposals = proposalMapper.selectProposalByUser(seq);
 		
-		List<ProposalDomain> proposalDomains = new ArrayList<ProposalDomain>();
+		List<ProposalReadDomain> proposalDomains = new ArrayList<ProposalReadDomain>();
 		
 		for(ProposalDTO proposal: proposals) {
 			
@@ -96,11 +96,12 @@ public class UserService {
 			writer.setNickname(user.getNickname());
 			writer.setPhone(user.getPhone());
 			
-			ProposalDomain proposalDomain = new ProposalDomain();
+			ProposalReadDomain proposalDomain = new ProposalReadDomain();
 			proposalDomain.setSeq(proposal.getSeq());
 			proposalDomain.setTitle(proposal.getTitle());
 			proposalDomain.setUser(writer);
-			proposalDomain.setCategory(proposal.getCategory());
+			//TODO: SET CATEGORY BY CATEGORY TABLE
+			proposalDomain.setCategory("");
 			proposalDomain.setAddress1(proposal.getAddress1());
 			proposalDomain.setAddress2(proposal.getAddress2());
 			proposalDomain.setTargetGender(proposal.getTargetGender());

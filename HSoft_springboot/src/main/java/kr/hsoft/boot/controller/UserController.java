@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.hsoft.boot.domain.PaginationDomain;
-import kr.hsoft.boot.domain.ProposalDomain;
+import kr.hsoft.boot.domain.ProposalReadDomain;
 import kr.hsoft.boot.domain.SignUpDomain;
 import kr.hsoft.boot.domain.UserDomain;
 import kr.hsoft.boot.exception.AuthNotFoundException;
@@ -80,7 +80,7 @@ public class UserController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 		
-		List<ProposalDomain> proposals = userService.getUserProposals(seq);
+		List<ProposalReadDomain> proposals = userService.getUserProposals(seq);
 		return new ResponseEntity<>(proposals, HttpStatus.OK);
 	}
 }

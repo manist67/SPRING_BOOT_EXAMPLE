@@ -79,7 +79,7 @@ public class AuthService {
 		if(auth == null) {
 			throw new AuthNotFoundException();
 		}
-		
+
 		UserDTO user = userMapper.selectUserBySeq(auth.getUserSeq());
 
 		if (user == null) {
@@ -88,7 +88,7 @@ public class AuthService {
 		
 		return user.getAuth();
 	}
-	
+
 	public void logout(String token) {
 		authMapper.deleteToken(token);
 		return;
