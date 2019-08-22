@@ -13,6 +13,7 @@ public interface ProposalMapper {
 	public List<ProposalDTO> selectProposalsForUser(String location);
 	public List<ProposalDTO> selectProposalsForMaster(String location);
 	public ProposalDTO selectProposal(int seq);
+	public List<ProposalDTO> selectProposalByUser(int seq); // 해당 seq는 user의 seq
 	public void insertProposal(ProposalDTO proposalDTO);
 	public void putProposal(@Param("seq") int seq, @Param("proposal") ProposalDTO proposalDTO);
 	public void putProposalState(@Param("seq") int seq, @Param("state") boolean state);
