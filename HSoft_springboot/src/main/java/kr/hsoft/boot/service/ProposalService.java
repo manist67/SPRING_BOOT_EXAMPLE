@@ -21,6 +21,7 @@ public class ProposalService{
 	@Autowired
 	UserMapper userMapper;
 	
+	
 	public List<ProposalDomain> getProposals() {
 		
 		List<ProposalDTO> proposals = proposalMapper.selectProposals();
@@ -97,6 +98,14 @@ public class ProposalService{
 		proposalDomain.setContents(proposal.getContents());
 		
 		return proposalDomain;
+	}
+	
+	public void postProposal(String token, ProposalDomain proposalDomain) {
+		
+		ProposalDTO proposalDTO = new ProposalDTO();
+		proposalDTO.setTitle(proposalDomain.getTitle());
+		
+		return;
 	}
 	
 	
