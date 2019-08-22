@@ -1,8 +1,6 @@
 package kr.hsoft.boot.domain;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.boot.jackson.JsonComponent;
@@ -31,6 +29,8 @@ public class SignUpDomain {
 	private String nickname;
 	@NotEmpty
 	private String name;
+	@NotEmpty
+	private String location;
 	
 	public String getUserID() {
 		return userID;
@@ -85,5 +85,11 @@ public class SignUpDomain {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
 	}
 }

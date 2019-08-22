@@ -1,6 +1,5 @@
 package kr.hsoft.boot.service;
 
-import java.security.SignatureException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,10 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.hsoft.boot.domain.PaginationDomain;
+import kr.hsoft.boot.domain.ProposalDomain;
 import kr.hsoft.boot.domain.SignUpDomain;
 import kr.hsoft.boot.domain.UserDomain;
+import kr.hsoft.boot.dto.ProposalDTO;
 import kr.hsoft.boot.dto.UserDTO;
 import kr.hsoft.boot.exception.SignUpErrorException;
+import kr.hsoft.boot.mapper.ProposalMapper;
 import kr.hsoft.boot.mapper.UserMapper;
 import kr.hsoft.boot.utils.SHA256;
 
@@ -19,6 +21,9 @@ import kr.hsoft.boot.utils.SHA256;
 public class UserService {
 	@Autowired
 	UserMapper userMapper;
+	
+	@Autowired
+	ProposalMapper proposalMapper;
 
 	public List<UserDomain> getUsers(PaginationDomain pagination) {
 		List<UserDTO> users = userMapper.selectUsers(pagination);
@@ -68,7 +73,50 @@ public class UserService {
 		userDTO.setGender(userInfo.getGender());
 		userDTO.setNickname(userInfo.getNickname());
 		userDTO.setNickname(userInfo.getName());
+		userDTO.setLocation(userInfo.getLocation());
 		
 		userMapper.insertUser(userDTO);
+	}
+	
+	public List<ProposalDomain> getUserProposals(int seq){
+		// seq는 user의 seq임
+		List<ProposalDTO> proposals = proposalMapper.selectProposalByUser(seq);
+		
+		List<ProposalDomain> proposalDomains = new ArrayList<ProposalDomain>();
+		
+		for(ProposalDTO proposal: proposals) {
+			
+			UserDTO user = userMapper.selectUserBySeq(proposal.getUser());
+			UserDomain writer = new UserDomain();
+			writer.setUserID(user.getUserID());
+			writer.setEmail(user.getEmail());
+			writer.setAddress1(user.getAddress1());
+			writer.setAddress2(user.getAddress2());
+			writer.setGender(user.getGender());
+			writer.setNickname(user.getNickname());
+			writer.setPhone(user.getPhone());
+			
+			ProposalDomain proposalDomain = new ProposalDomain();
+			proposalDomain.setSeq(proposal.getSeq());
+			proposalDomain.setTitle(proposal.getTitle());
+			proposalDomain.setUser(writer);
+			proposalDomain.setCategory(proposal.getCategory());
+			proposalDomain.setAddress1(proposal.getAddress1());
+			proposalDomain.setAddress2(proposal.getAddress2());
+			proposalDomain.setTargetGender(proposal.getTargetGender());
+			proposalDomain.setDate(proposal.getDate());
+			proposalDomain.setMinAge(proposal.getMinAge());
+			proposalDomain.setMaxAge(proposal.getMaxAge());
+			proposalDomain.setFee(proposal.getFee());
+			proposalDomain.setMinParticipants(proposal.getMinParticipants());
+			proposalDomain.setMaxParticipants(proposal.getMaxParticipants());
+			proposalDomain.setRequirements(proposal.getRequirements());
+			proposalDomain.setContents(proposal.getContents());
+			
+			proposalDomains.add(proposalDomain);
+		}
+		
+		return proposalDomains;
+		
 	}
 }

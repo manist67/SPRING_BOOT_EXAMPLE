@@ -21,9 +21,21 @@ public class ProposalService{
 	@Autowired
 	UserMapper userMapper;
 	
-	public List<ProposalDomain> getProposals() {
+	
+	public List<ProposalDomain> getProposals(UserDomain userDomain) {
 		
-		List<ProposalDTO> proposals = proposalMapper.selectProposals();
+		String location = userDomain.getLocation();
+		String authLevel = userDomain.getAuth();
+		
+		List<ProposalDTO> proposals = new ArrayList<ProposalDTO>();
+		
+		if(authLevel == "USER") {
+			proposals = proposalMapper.selectProposalsForUser(location);
+		}else if(authLevel == "ADMIN") {
+			proposals = proposalMapper.selectProposals();
+		}else if(authLevel == "MASTER") {
+			proposals = proposalMapper.selectProposalsForMaster(location);
+		}
 		
 		List<ProposalDomain> proposalDomains = new ArrayList<ProposalDomain>();
 		
@@ -31,19 +43,19 @@ public class ProposalService{
 		for(ProposalDTO proposal: proposals) {
 			
 			UserDTO user = userMapper.selectUserBySeq(proposal.getUser());
-			UserDomain userDomain = new UserDomain();
-			userDomain.setUserID(user.getUserID());
-			userDomain.setEmail(user.getEmail());
-			userDomain.setAddress1(user.getAddress1());
-			userDomain.setAddress2(user.getAddress2());
-			userDomain.setGender(user.getGender());
-			userDomain.setNickname(user.getNickname());
-			userDomain.setPhone(user.getPhone());
+			UserDomain writer = new UserDomain();
+			writer.setUserID(user.getUserID());
+			writer.setEmail(user.getEmail());
+			writer.setAddress1(user.getAddress1());
+			writer.setAddress2(user.getAddress2());
+			writer.setGender(user.getGender());
+			writer.setNickname(user.getNickname());
+			writer.setPhone(user.getPhone());
 			
 			ProposalDomain proposalDomain = new ProposalDomain();
 			proposalDomain.setSeq(proposal.getSeq());
 			proposalDomain.setTitle(proposal.getTitle());
-			proposalDomain.setUser(userDomain);
+			proposalDomain.setUser(writer);
 			proposalDomain.setCategory(proposal.getCategory());
 			proposalDomain.setAddress1(proposal.getAddress1());
 			proposalDomain.setAddress2(proposal.getAddress2());
@@ -67,22 +79,22 @@ public class ProposalService{
 	
 	public ProposalDomain getProposal(int seq) {
 		
-		ProposalDTO proposal = proposalMapper.selectProposalBySeq(seq);
+		ProposalDTO proposal = new ProposalDTO();
 		
 		UserDTO user = userMapper.selectUserBySeq(proposal.getUser());
-		UserDomain userDomain = new UserDomain();
-		userDomain.setUserID(user.getUserID());
-		userDomain.setEmail(user.getEmail());
-		userDomain.setAddress1(user.getAddress1());
-		userDomain.setAddress2(user.getAddress2());
-		userDomain.setGender(user.getGender());
-		userDomain.setNickname(user.getNickname());
-		userDomain.setPhone(user.getPhone());
+		UserDomain writer = new UserDomain();
+		writer.setUserID(user.getUserID());
+		writer.setEmail(user.getEmail());
+		writer.setAddress1(user.getAddress1());
+		writer.setAddress2(user.getAddress2());
+		writer.setGender(user.getGender());
+		writer.setNickname(user.getNickname());
+		writer.setPhone(user.getPhone());
 		
 		ProposalDomain proposalDomain =  new ProposalDomain();
 		proposalDomain.setSeq(proposal.getSeq());
 		proposalDomain.setTitle(proposal.getTitle());
-		proposalDomain.setUser(userDomain);
+		proposalDomain.setUser(writer);
 		proposalDomain.setCategory(proposal.getCategory());
 		proposalDomain.setAddress1(proposal.getAddress1());
 		proposalDomain.setAddress2(proposal.getAddress2());
@@ -98,6 +110,77 @@ public class ProposalService{
 		
 		return proposalDomain;
 	}
+
+	public void postProposal(UserDomain user, ProposalDomain proposalDomain) {
+		
+		// 예외처리,, valid..?
+		ProposalDTO proposalDTO = new ProposalDTO();
+		proposalDTO.setTitle(proposalDomain.getTitle());
+		proposalDTO.setMinAge(proposalDomain.getMinAge());
+		proposalDTO.setMaxAge(proposalDomain.getMaxAge());
+		proposalDTO.setTargetGender(proposalDomain.getTargetGender());
+		proposalDTO.setCategory(proposalDomain.getCategory());
+		proposalDTO.setAddress1(proposalDomain.getAddress1());
+		proposalDTO.setAddress2(proposalDomain.getAddress2());
+		proposalDTO.setDate(proposalDomain.getDate());
+		proposalDTO.setFee(proposalDomain.getFee());
+		proposalDTO.setMinParticipants(proposalDomain.getMinParticipants());
+		proposalDTO.setMaxParticipants(proposalDomain.getMaxAge());
+		proposalDTO.setRequirements(proposalDomain.getRequirements());
+		proposalDTO.setContents(proposalDomain.getContents());	
+		proposalDTO.setUser(user.getSeq());
+		
+		proposalMapper.insertProposal(proposalDTO);
+		
+	}
 	
+	public void putProposalForUser(int seq, ProposalDomain proposalDomain) {
+		
+		ProposalDTO proposalDTO = new ProposalDTO();
+		proposalDTO.setTitle(proposalDomain.getTitle());
+		proposalDTO.setMinAge(proposalDomain.getMinAge());
+		proposalDTO.setMaxAge(proposalDomain.getMaxAge());
+		proposalDTO.setTargetGender(proposalDomain.getTargetGender());
+		proposalDTO.setCategory(proposalDomain.getCategory());
+		proposalDTO.setAddress1(proposalDomain.getAddress1());
+		proposalDTO.setAddress2(proposalDomain.getAddress2());
+		proposalDTO.setDate(proposalDomain.getDate());
+		proposalDTO.setFee(proposalDomain.getFee());
+		proposalDTO.setMinParticipants(proposalDomain.getMinParticipants());
+		proposalDTO.setMaxParticipants(proposalDomain.getMaxAge());
+		proposalDTO.setRequirements(proposalDomain.getRequirements());
+		proposalDTO.setContents(proposalDomain.getContents());
+		
+		proposalMapper.putProposal(seq, proposalDTO);
+	}
+	
+public void putProposalForAdmin(int seq, ProposalDomain proposalDomain) {
+		
+		ProposalDTO proposalDTO = new ProposalDTO();
+		proposalDTO.setTitle(proposalDomain.getTitle());
+		proposalDTO.setMinAge(proposalDomain.getMinAge());
+		proposalDTO.setMaxAge(proposalDomain.getMaxAge());
+		proposalDTO.setTargetGender(proposalDomain.getTargetGender());
+		proposalDTO.setCategory(proposalDomain.getCategory());
+		proposalDTO.setAddress1(proposalDomain.getAddress1());
+		proposalDTO.setAddress2(proposalDomain.getAddress2());
+		proposalDTO.setDate(proposalDomain.getDate());
+		proposalDTO.setFee(proposalDomain.getFee());
+		proposalDTO.setMinParticipants(proposalDomain.getMinParticipants());
+		proposalDTO.setMaxParticipants(proposalDomain.getMaxAge());
+		proposalDTO.setRequirements(proposalDomain.getRequirements());
+		proposalDTO.setContents(proposalDomain.getContents());
+		
+		proposalMapper.putProposal(seq, proposalDTO);
+		proposalMapper.putProposalState(seq);
+	}
+	
+	public void putProposalState(int seq) {
+		proposalMapper.putProposalState(seq);
+	}
+	
+	public void deleteProposal(int seq) {
+		proposalMapper.deleteProposal(seq);
+	}
 	
 }

@@ -26,5 +26,6 @@
 			token = #{token} 
 			and 
 			(UNIX_TIMESTAMP(`create`) + expire) > UNIX_TIMESTAMP(NOW())
+		LIMIT 1
 	</select>
 </mapper>

@@ -2,8 +2,6 @@ package kr.hsoft.boot.domain;
 
 import java.sql.Timestamp;
 
-import javax.validation.constraints.Min;
-
 import org.springframework.boot.jackson.JsonComponent;
 
 @JsonComponent
@@ -19,6 +17,7 @@ public class UserDomain {
 	private Timestamp create;
 	private Timestamp modify;
 	private String auth;
+	private String location;
 	private boolean enable;
 	
 	public int getSeq() {
@@ -92,5 +91,11 @@ public class UserDomain {
 	}
 	public void setEnable(boolean enable) {
 		this.enable = enable;
+	}
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
 	}
 }

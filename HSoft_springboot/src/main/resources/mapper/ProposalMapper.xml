@@ -10,4 +10,16 @@
 	<select id="selectProposalBySeq" parameterType="java.lang.Integer" resultType="kr.hsoft.boot.dto.ProposalDTO">
 		SELECT * FROM PROPOSAL WHERE SEQ = #{seq}
 	</select>
+	
+	<insert id="insertProposal" parameterType="kr.hsoft.boot.dto.ProposalDTO">
+		insert into PROPOSAL ( 
+			TITLE, `USER`, CATEGORY, MIN_AGE, MAX_AGE,
+			ADDRESS1, ADDRESS2, TARGET_GENDER, `DATE`, FEE, MIN_PARTICIPANTS, 
+			MAX_PARTICIPANTS, REQUIREMENTS, CONTENTS
+		) values (
+			#{title}, #{user}, #{category}, #{minAge}, #{maxAge}, 
+			#{address1}, #{address2}, #{targetGender}, #{date}, 
+			#{fee}, #{minParticipants}, #{maxParticipants}, #{requirements}, #{contents}
+		)
+	</insert>
 </mapper>
