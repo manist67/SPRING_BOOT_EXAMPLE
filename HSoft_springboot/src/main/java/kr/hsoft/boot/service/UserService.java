@@ -1,6 +1,5 @@
 package kr.hsoft.boot.service;
 
-import java.security.SignatureException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,6 +67,7 @@ public class UserService {
 		userDTO.setGender(userInfo.getGender());
 		userDTO.setNickname(userInfo.getNickname());
 		userDTO.setNickname(userInfo.getName());
+		userDTO.setLocation(userInfo.getLocation());
 		
 		userMapper.insertUser(userDTO);
 	}
