@@ -13,11 +13,13 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.*;
 
+import kr.hsoft.boot.domain.ApplicationDomain;
 import kr.hsoft.boot.domain.ProposalReadDomain;
 import kr.hsoft.boot.domain.ProposalWriteDomain;
 import kr.hsoft.boot.domain.UserDomain;
 import kr.hsoft.boot.exception.AuthNotFoundException;
 import kr.hsoft.boot.exception.UserNotFoundException;
+import kr.hsoft.boot.service.ApplicationService;
 import kr.hsoft.boot.service.AuthService;
 import kr.hsoft.boot.service.ProposalService;
 
@@ -31,11 +33,34 @@ public class ProposalsController {
 	@Autowired
 	AuthService authService;
 		
+	@Autowired
+	ApplicationService applicationService;
+	
 	@RequestMapping(value= "/{seq}", method = RequestMethod.GET)
 	@CrossOrigin("http://localhost:3000")
 	public ResponseEntity<?> getProposal(@RequestHeader @Valid HashMap<String, String> header, @PathVariable("seq") int seq) {
 		ProposalReadDomain proposal = proposalService.getProposal(seq);
 		return new ResponseEntity<ProposalReadDomain>(proposal, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/{seq}/application", method=RequestMethod.GET)
+	@CrossOrigin("http://localhost:3000")
+	public ResponseEntity<?> getProposalApplications(@PathVariable int seq){
+		List<ApplicationDomain> proposalApplication = applicationService.getApplicationsByProposal(seq);
+		
+		if (proposalApplication==null) {
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<>(proposalApplication, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/{seq}/application/count", method=RequestMethod.GET)
+	@CrossOrigin("http://localhost:3000")
+	public ResponseEntity<?> getProposalApplicationCount(@PathVariable int seq){
+		int applicationCount = applicationService.getApplicationsByProposal(seq).size();
+
+		return new ResponseEntity<>(applicationCount, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
@@ -46,7 +71,7 @@ public class ProposalsController {
 		if(token == null) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
-		
+
 		UserDomain user = authService.getUser(token);
 		
 		List<ProposalReadDomain> proposals;
