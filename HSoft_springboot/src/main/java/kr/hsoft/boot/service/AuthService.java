@@ -93,4 +93,25 @@ public class AuthService {
 		authMapper.deleteToken(token);
 		return;
 	}
+	
+	public Boolean validateId(String id) {
+		if(authMapper.validateId(id) == 0)
+			return false;
+		else
+			return true;
+	}
+	
+	public Boolean validatePhone(String phone) {
+		if(authMapper.validatePhone(phone) == 0)
+			return false;
+		else
+			return true;
+	}
+	
+	public Boolean validateNickname(String nickname) {
+		if(authMapper.validateNickname(nickname) == 0)
+			return false;
+		else
+			return true;
+	}
 }

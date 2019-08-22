@@ -73,6 +73,8 @@ public class UserController {
 		return new ResponseEntity<>(null, HttpStatus.OK);
 	}
 	
+	
+	
 	@RequestMapping(value= "/{seq}/proposals", method = RequestMethod.GET)
 	public ResponseEntity<?> getUserProposals(@RequestHeader HashMap<String, String> header, @PathVariable("seq") int seq){
 		String token = header.get("token");

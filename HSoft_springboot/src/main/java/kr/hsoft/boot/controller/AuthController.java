@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,5 +74,18 @@ public class AuthController {
 		return new ResponseEntity<>(null, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value= "/{id}", method = RequestMethod.POST)
+	public ResponseEntity<?> validateId(@PathVariable("id") String id){
+		return new ResponseEntity<>(authService.validateId(id), HttpStatus.OK);
+	}
 	
+	@RequestMapping(value= "/{phone}", method = RequestMethod.POST)
+	public ResponseEntity<?> validatePhone(@PathVariable("phone") String phone){
+		return new ResponseEntity<>(authService.validatePhone(phone), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value= "/{nickname}", method = RequestMethod.POST)
+	public ResponseEntity<?> validateNickname(@PathVariable("nickname") String nickname){
+		return new ResponseEntity<>(authService.validateNickname(nickname), HttpStatus.OK);
+	}
 }
