@@ -1,11 +1,14 @@
 package kr.hsoft.boot.domain;
 
+import org.springframework.boot.jackson.JsonComponent;
+
 import kr.hsoft.boot.domain.*;
 
+@JsonComponent
 public class ProposalDomain {
 	private int seq;
 	private String title;
-	private int user;
+	private UserDomain user;
 	private String category;
 	private String address1;
 	private String address2;
@@ -51,10 +54,10 @@ public class ProposalDomain {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public int getUser() {
+	public UserDomain getUser() {
 		return user;
 	}
-	public void setUser(int user) {
+	public void setUser(UserDomain user) {
 		this.user = user;
 	}
 	public String getCategory() {
