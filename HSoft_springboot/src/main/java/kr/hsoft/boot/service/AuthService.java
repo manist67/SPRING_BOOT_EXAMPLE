@@ -11,6 +11,7 @@ import kr.hsoft.boot.exception.AuthNotFoundException;
 import kr.hsoft.boot.exception.UserNotFoundException;
 import kr.hsoft.boot.mapper.AuthMapper;
 import kr.hsoft.boot.mapper.UserMapper;
+import kr.hsoft.boot.utils.SHA256;
 
 @Service
 public class AuthService {
@@ -21,8 +22,8 @@ public class AuthService {
 	AuthMapper authMapper;
 
 	public AuthDomain login(LoginDomain loginDomain) throws UserNotFoundException {
-		// TODO: encrypted the password
-
+		loginDomain.setPassword(SHA256.sha256(loginDomain.getPassword()));
+		
 		UserDTO user = userMapper.selectUserByIDandPassword(loginDomain);
 
 		if (user == null) {
