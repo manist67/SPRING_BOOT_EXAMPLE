@@ -12,6 +12,7 @@ import kr.hsoft.boot.mapper.ApplicationMapper;
 import kr.hsoft.boot.dto.ApplicationDTO;
 import kr.hsoft.boot.exception.ApplicationNotFoundException;
 import kr.hsoft.boot.domain.ApplicationDomain;
+import kr.hsoft.boot.domain.ApplicationWriteDomain;
 import kr.hsoft.boot.domain.UserDomain;
 
 @Service
@@ -77,5 +78,19 @@ public class ApplicationService {
 		
 
 		return detailDomain;
+	}
+	
+	public void postApplication(int seq, UserDomain user, ApplicationWriteDomain application) {
+		application.setUser(user.getSeq());
+		application.setProposal(seq);
+		
+		ApplicationDTO appDTO = new ApplicationDTO();
+		
+		appDTO.setProposal(seq);
+		appDTO.setUser(user.getSeq());
+		appDTO.setChildrenCount(application.getChildrenCount());
+		appDTO.setContents(application.getContents());
+		
+		applicationMapper.insertApplication(appDTO);
 	}
 }

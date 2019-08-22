@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.*;
 
 import kr.hsoft.boot.domain.ApplicationDomain;
+import kr.hsoft.boot.domain.ApplicationWriteDomain;
 import kr.hsoft.boot.domain.ProposalReadDomain;
 import kr.hsoft.boot.domain.ProposalWriteDomain;
 import kr.hsoft.boot.domain.UserDomain;
@@ -53,6 +54,35 @@ public class ProposalsController {
 		}
 		
 		return new ResponseEntity<>(proposalApplication, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/{seq}/application", method=RequestMethod.POST)
+	@CrossOrigin("http://localhost:3000")
+	public ResponseEntity<?> getProposalApplications(
+			@RequestHeader HashMap<String, String> header, 
+			@PathVariable int seq, @RequestBody @Valid ApplicationWriteDomain application,
+			Errors errors) {
+		if(errors.hasErrors()) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+		
+		String token = header.get("token");
+		if(token == null) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+		
+		UserDomain user;
+		try {
+			user = authService.getUser(token);
+		} catch (UserNotFoundException e) {
+			return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+		} catch (AuthNotFoundException e) {
+			return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+		}
+		
+		applicationService.postApplication(seq, user, application);
+		
+		return new ResponseEntity<>(null, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/{seq}/application/count", method=RequestMethod.GET)
