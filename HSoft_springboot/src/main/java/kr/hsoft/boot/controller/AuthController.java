@@ -18,15 +18,14 @@ import kr.hsoft.boot.domain.LoginDomain;
 import kr.hsoft.boot.domain.UserDomain;
 import kr.hsoft.boot.exception.AuthNotFoundException;
 import kr.hsoft.boot.exception.UserNotFoundException;
-import kr.hsoft.boot.service.UserService;
-
+import kr.hsoft.boot.service.AuthService;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @RestController
 @RequestMapping(value="/auth")
 public class AuthController {
 	@Autowired
-	UserService userService;
+	AuthService authService;
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<?> getUserInfo(@RequestHeader HashMap<String, String> header) {
@@ -37,7 +36,7 @@ public class AuthController {
 		
 		UserDomain user;
 		try {
-			user = userService.getUser(token);
+			user = authService.getUser(token);
 		} catch(UserNotFoundException e) {
 			return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
 		} catch(AuthNotFoundException e) {
@@ -55,7 +54,7 @@ public class AuthController {
 		
 		AuthDomain auth;
 		try {
-			auth = userService.login(loginInfo);
+			auth = authService.login(loginInfo);
 		} catch(UserNotFoundException e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
@@ -70,7 +69,7 @@ public class AuthController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 		
-		userService.logout(header.get("token"));
+		authService.logout(header.get("token"));
 		return new ResponseEntity<>(null, HttpStatus.OK);
 	}
 	

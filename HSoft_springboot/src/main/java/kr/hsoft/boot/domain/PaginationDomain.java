@@ -1,8 +1,8 @@
 package kr.hsoft.boot.domain;
 
 public class PaginationDomain {
-	private int page;
-	private int unit;
+	private int page = 0;
+	private int unit = 15;
 	
 	public int getPage() {
 		return page;
@@ -15,5 +15,8 @@ public class PaginationDomain {
 	}
 	public void setUnit(int unit) {
 		this.unit = unit;
+	}
+	public int getOffset() {
+		return page * unit;
 	}
 }
