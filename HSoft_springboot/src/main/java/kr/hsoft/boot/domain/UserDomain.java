@@ -2,6 +2,8 @@ package kr.hsoft.boot.domain;
 
 import java.sql.Timestamp;
 
+import javax.validation.constraints.Min;
+
 import org.springframework.boot.jackson.JsonComponent;
 
 @JsonComponent
@@ -12,7 +14,7 @@ public class UserDomain {
 	private String address2;
 	private String phone;
 	private String email;
-	private char gender;
+	private String gender;
 	private String nickname;
 	private Timestamp create;
 	private Timestamp modify;
@@ -55,10 +57,10 @@ public class UserDomain {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public char getGender() {
+	public String getGender() {
 		return gender;
 	}
-	public void setGender(char gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 	public String getNickname() {

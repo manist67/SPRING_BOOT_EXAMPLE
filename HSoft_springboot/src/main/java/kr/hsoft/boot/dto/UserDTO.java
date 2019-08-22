@@ -5,15 +5,17 @@ import java.sql.Timestamp;
 public class UserDTO {
 	private int seq;
 	private String userID;
+	private String password;
 	private String address1;
 	private String address2;
 	private String phone;
 	private String email;
-	private char gender;
+	private String gender;
 	private String nickname;
 	private Timestamp create;
 	private Timestamp modify;
 	private String auth;
+	private String name;
 	private boolean enable;
 	
 	public int getSeq() {
@@ -52,10 +54,10 @@ public class UserDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public char getGender() {
+	public String getGender() {
 		return gender;
 	}
-	public void setGender(char gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 	public String getNickname() {
@@ -87,5 +89,17 @@ public class UserDTO {
 	}
 	public void setEnable(boolean enable) {
 		this.enable = enable;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 }

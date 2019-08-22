@@ -13,4 +13,8 @@ public interface UserMapper {
 	public UserDTO selectUserByIDandPassword(LoginDomain loginDomain);
 	public UserDTO selectUserBySeq(Integer seq);
 	public List<UserDTO> selectUsers(PaginationDomain pagination);
+	public int countUsersByID(String userID);
+	public int countUsersByEmail(String email);
+	public int countUsersByPhone(String phone);
+	public void insertUser(UserDTO user);
 }
