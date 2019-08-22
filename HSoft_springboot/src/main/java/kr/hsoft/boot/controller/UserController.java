@@ -9,12 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.hsoft.boot.domain.PaginationDomain;
+import kr.hsoft.boot.domain.ProposalDomain;
 import kr.hsoft.boot.domain.SignUpDomain;
 import kr.hsoft.boot.domain.UserDomain;
 import kr.hsoft.boot.exception.AuthNotFoundException;
@@ -69,6 +71,17 @@ public class UserController {
 		}
 		
 		return new ResponseEntity<>(null, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value= "/{seq}/proposals", method = RequestMethod.GET)
+	public ResponseEntity<?> getUserProposals(@RequestHeader HashMap<String, String> header, @PathVariable("seq") int seq){
+		String token = header.get("token");
+		if(token == null) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+		
+		List<ProposalDomain> proposals = userService.getUserProposals(seq);
+		return new ResponseEntity<>(proposals, HttpStatus.OK);
 	}
 }
 
