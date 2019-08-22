@@ -78,18 +78,35 @@ public class AuthController {
 		return new ResponseEntity<>(null, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value= "/{id}", method = RequestMethod.POST)
-	public ResponseEntity<?> validateId(@PathVariable("id") String id){
-		return new ResponseEntity<>(authService.validateId(id), HttpStatus.OK);
+	@RequestMapping(value= "/validator", method = RequestMethod.GET)
+	public ResponseEntity<?> validateId(String value, String flag) {
+		if(value == null ) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
+		Boolean isDuplicate;
+		switch(flag) {
+		case "id":
+			isDuplicate = authService.validateId(value);
+			break;
+		case "phone":
+			isDuplicate = authService.validatePhone(value);
+			break;
+		case "nickname":
+			isDuplicate = authService.validateNickname(value);
+			break;
+		default:
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(isDuplicate, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value= "/{phone}", method = RequestMethod.POST)
+	/*
+	@RequestMapping(value= "/{phone}", method = RequestMethod.GET)
 	public ResponseEntity<?> validatePhone(@PathVariable("phone") String phone){
 		return new ResponseEntity<>(authService.validatePhone(phone), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value= "/{nickname}", method = RequestMethod.POST)
+	@RequestMapping(value= "/{nickname}", method = RequestMethod.GET)
 	public ResponseEntity<?> validateNickname(@PathVariable("nickname") String nickname){
 		return new ResponseEntity<>(authService.validateNickname(nickname), HttpStatus.OK);
-	}
+	}*/
 }

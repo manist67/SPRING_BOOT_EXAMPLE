@@ -104,23 +104,14 @@ public class AuthService {
 	}
 	
 	public Boolean validateId(String id) {
-		if(authMapper.validateId(id) == 0)
-			return false;
-		else
-			return true;
+		return authMapper.validateId(id) == 0;
 	}
 	
 	public Boolean validatePhone(String phone) {
-		if(authMapper.validatePhone(phone) == 0)
-			return false;
-		else
-			return true;
+		return authMapper.validatePhone(phone) == 0;
 	}
 	
 	public Boolean validateNickname(String nickname) {
-		if(authMapper.validateNickname(nickname) == 0)
-			return false;
-		else
-			return true;
+		return authMapper.validateNickname(nickname) == 0;
 	}
 }
