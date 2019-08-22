@@ -134,10 +134,7 @@ public class ProposalService{
 		
 	}
 	
-	public void putProposal(ProposalDomain proposalDomain) {
-		
-		// 모든 정보를 수정 할 수 있나? 
-		// 이미 신청자가 있는 경우는..?
+	public void putProposalForUser(int seq, ProposalDomain proposalDomain) {
 		
 		ProposalDTO proposalDTO = new ProposalDTO();
 		proposalDTO.setTitle(proposalDomain.getTitle());
@@ -154,12 +151,36 @@ public class ProposalService{
 		proposalDTO.setRequirements(proposalDomain.getRequirements());
 		proposalDTO.setContents(proposalDomain.getContents());
 		
-		proposalMapper.putProposal(proposalDTO);
+		proposalMapper.putProposal(seq, proposalDTO);
 	}
 	
-	public void putProposalState() {
-		proposalMapper.putProposalState();
+public void putProposalForAdmin(int seq, ProposalDomain proposalDomain) {
+		
+		ProposalDTO proposalDTO = new ProposalDTO();
+		proposalDTO.setTitle(proposalDomain.getTitle());
+		proposalDTO.setMinAge(proposalDomain.getMinAge());
+		proposalDTO.setMaxAge(proposalDomain.getMaxAge());
+		proposalDTO.setTargetGender(proposalDomain.getTargetGender());
+		proposalDTO.setCategory(proposalDomain.getCategory());
+		proposalDTO.setAddress1(proposalDomain.getAddress1());
+		proposalDTO.setAddress2(proposalDomain.getAddress2());
+		proposalDTO.setDate(proposalDomain.getDate());
+		proposalDTO.setFee(proposalDomain.getFee());
+		proposalDTO.setMinParticipants(proposalDomain.getMinParticipants());
+		proposalDTO.setMaxParticipants(proposalDomain.getMaxAge());
+		proposalDTO.setRequirements(proposalDomain.getRequirements());
+		proposalDTO.setContents(proposalDomain.getContents());
+		
+		proposalMapper.putProposal(seq, proposalDTO);
+		proposalMapper.putProposalState(seq);
 	}
 	
+	public void putProposalState(int seq) {
+		proposalMapper.putProposalState(seq);
+	}
+	
+	public void deleteProposal(int seq) {
+		proposalMapper.deleteProposal(seq);
+	}
 	
 }

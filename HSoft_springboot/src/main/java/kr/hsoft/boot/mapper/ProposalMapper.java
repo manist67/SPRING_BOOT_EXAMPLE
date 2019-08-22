@@ -13,6 +13,7 @@ public interface ProposalMapper {
 	public List<ProposalDTO> selectProposalsForMaster(String location);
 	public ProposalDTO selectProposal(int seq);
 	public void insertProposal(ProposalDTO proposalDTO);
-	public void putProposal(ProposalDTO proposalDTO);
-	public void putProposalState();
+	public void putProposal(int seq, ProposalDTO proposalDTO);
+	public void putProposalState(int seq);
+	public void deleteProposal(int seq);
 }

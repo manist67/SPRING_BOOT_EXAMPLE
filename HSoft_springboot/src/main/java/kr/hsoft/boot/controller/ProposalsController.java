@@ -95,17 +95,42 @@ public class ProposalsController {
 		
 		if(authLevel == "USER"
 				&& authService.getUser(token) == proposalService.getProposal(seq).getUser()) {
-			proposalService.putProposal(proposalDomain);
+			proposalService.putProposalForUser(seq, proposalDomain);
 			return new ResponseEntity<>(null, HttpStatus.OK);
 		}else if(authLevel == "ADMIN") {
-			proposalService.putProposal(proposalDomain);
+			proposalService.putProposalForAdmin(seq, proposalDomain);
 			return new ResponseEntity<>(null, HttpStatus.OK);
 		}else if(authLevel == "MASTER"
 				&& authService.getUser(token).getLocation() == proposalService.getProposal(seq).getUser().getLocation()) {
-			proposalService.putProposalState();
+			proposalService.putProposalState(seq);
 		}
 		
 		return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
 	}
+	
+	@RequestMapping(value= "/{seq}", method = RequestMethod.DELETE)
+	@CrossOrigin("http://localhostL:3000")
+	public ResponseEntity<?> deleteProposal(@RequestHeader @Valid HashMap<String, String> header, 
+			@PathVariable("seq") int seq) throws UserNotFoundException, AuthNotFoundException{
+		String token = header.get("token");
+		if(token == null) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	
+		UserDomain userDomain = authService.getUser(token);
+		String authLevel =  userDomain.getAuth();
+		
+		if(authLevel == "USER"
+				&& authService.getUser(token) == proposalService.getProposal(seq).getUser()) {
+			proposalService.deleteProposal(seq);
+			return new ResponseEntity<>(null, HttpStatus.OK);
+		}else if(authLevel == "ADMIN") {
+			proposalService.deleteProposal(seq);
+			return new ResponseEntity<>(null, HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+	}
+	
 	
 }
