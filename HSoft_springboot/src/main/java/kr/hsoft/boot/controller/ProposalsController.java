@@ -44,7 +44,7 @@ public class ProposalsController {
 		return new ResponseEntity<ProposalReadDomain>(proposal, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/{seq}/application", method=RequestMethod.GET)
+	@RequestMapping(value="/{seq}/applications", method=RequestMethod.GET)
 	@CrossOrigin("http://localhost:3000")
 	public ResponseEntity<?> getProposalApplications(@PathVariable int seq){
 		List<ApplicationDomain> proposalApplication = applicationService.getApplicationsByProposal(seq);
@@ -56,7 +56,7 @@ public class ProposalsController {
 		return new ResponseEntity<>(proposalApplication, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/{seq}/application", method=RequestMethod.POST)
+	@RequestMapping(value="/{seq}/applications", method=RequestMethod.POST)
 	@CrossOrigin("http://localhost:3000")
 	public ResponseEntity<?> getProposalApplications(
 			@RequestHeader HashMap<String, String> header, 
@@ -85,7 +85,7 @@ public class ProposalsController {
 		return new ResponseEntity<>(null, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/{seq}/application/count", method=RequestMethod.GET)
+	@RequestMapping(value="/{seq}/applications/count", method=RequestMethod.GET)
 	@CrossOrigin("http://localhost:3000")
 	public ResponseEntity<?> getProposalApplicationCount(@PathVariable int seq){
 		int applicationCount = applicationService.getApplicationsByProposal(seq).size();

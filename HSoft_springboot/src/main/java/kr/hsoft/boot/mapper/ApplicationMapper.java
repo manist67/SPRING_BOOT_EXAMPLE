@@ -10,7 +10,7 @@ import kr.hsoft.boot.dto.ApplicationDTO;
 
 @Mapper
 public interface ApplicationMapper {
-	@Insert("insert into APPLICATION (USER, PROPOSAL, CONTENTS, CHILDREN_COUNT) values ( #{user}, #{proposal}, #{content}, #{childrenCount}")
+	@Insert("insert into APPLICATION (USER, PROPOSAL, CONTENTS, CHILDREN_COUNT) values ( #{user}, #{proposal}, #{contents}, #{childrenCount})")
 	void insertApplication(ApplicationDTO applicationDTO);
 	void updateApplication(ApplicationDTO applicationDTO);
 	List<ApplicationDTO> getApplications(int userID);
