@@ -1,10 +1,8 @@
 package kr.hsoft.boot.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +23,6 @@ public class ProposalsController {
 		
 		ProposalDomain proposal = proposalService.getProposal(seq);
 		return new ResponseEntity<ProposalDomain>(proposal, HttpStatus.OK);
-		
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)

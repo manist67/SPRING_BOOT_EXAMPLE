@@ -26,14 +26,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AuthController {
 	@Autowired
 	AuthService authService;
-	
+
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<?> getUserInfo(@RequestHeader HashMap<String, String> header) {
 		String token = header.get("token");
 		if(token == null) {
 			return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
 		}
-		
+
 		UserDomain user;
 		try {
 			user = authService.getUser(token);
