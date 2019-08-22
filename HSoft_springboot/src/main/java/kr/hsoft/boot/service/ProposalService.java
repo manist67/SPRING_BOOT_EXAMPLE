@@ -49,6 +49,8 @@ public class ProposalService{
 		
 		List<ProposalReadDomain> proposalDomains = new ArrayList<ProposalReadDomain>();
 		
+		System.out.println("Qhdkso!88");
+		System.out.println(proposals.get(0).getMaxAge() + " "+proposals.get(0).getMinAge());
 		
 		for(ProposalDTO proposal: proposals) {
 			
@@ -72,9 +74,9 @@ public class ProposalService{
 			proposalDomain.setAddress2(proposal.getAddress2());
 			proposalDomain.setTargetGender(proposal.getTargetGender());
 			proposalDomain.setDate(proposal.getDate());
-			proposalDomain.setMinAge(proposal.getMinAge());
 			
 			//bug
+			proposalDomain.setMinAge(proposal.getMinAge());
 			proposalDomain.setMaxAge(proposal.getMaxAge());
 			
 			proposalDomain.setFee(proposal.getFee());

@@ -12,6 +12,6 @@ public interface ApplicationMapper {
 	void updateApplication(ApplicationDTO applicationDTO);
 	List<ApplicationDTO> getApplications(int userID);
 	List<ApplicationDTO> getApplicationsByProposal(int seq);
-	ApplicationDTO getApplication(int seq);//seq에 해당하는 신청
+	ApplicationDTO getApplication(int seq);
 	
 }

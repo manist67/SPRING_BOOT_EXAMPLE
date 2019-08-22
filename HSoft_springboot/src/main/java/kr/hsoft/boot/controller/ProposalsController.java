@@ -78,7 +78,7 @@ public class ProposalsController {
 		if(token == null) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
-		
+
 		UserDomain user = authService.getUser(token);
 		
 		List<ProposalReadDomain> proposals;
