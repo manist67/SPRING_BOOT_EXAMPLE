@@ -1,5 +1,7 @@
 package kr.hsoft.boot.service;
 
+import java.security.SecureRandom;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,10 +33,16 @@ public class AuthService {
 		}
 
 		AuthDomain authDomain = new AuthDomain();
+		
+		SecureRandom random = new SecureRandom();
+		byte bytes[] = new byte[256];
+		random.nextBytes(bytes);
+		String token = bytes.toString();
 
 		authDomain.setUserSeq(user.getSeq());
-		authDomain.setToken("asdf");
-		authDomain.setReToken("asdfg");
+		authDomain.setToken(token);
+		//TODO: RETOKEN
+		authDomain.setReToken(token);
 		authDomain.setExpire(3600);
 
 		authMapper.createAuthToken(authDomain);
