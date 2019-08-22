@@ -1,12 +1,11 @@
 package kr.hsoft.boot.dto;
 
-import kr.hsoft.boot.domain.ProposalDomain;
 import kr.hsoft.boot.domain.UserDomain;
 
 public class ApplicationDTO {
 	private int seq;
 	private UserDomain user;
-	private ProposalDomain proposal;
+	private int proposal;
 	private String contents;
 	private int childrenCount;
 	private int create;
@@ -24,12 +23,6 @@ public class ApplicationDTO {
 	}
 	public void setUser(UserDomain user) {
 		this.user = user;
-	}
-	public ProposalDomain getProposal() {
-		return proposal;
-	}
-	public void setProposal(ProposalDomain proposal) {
-		this.proposal = proposal;
 	}
 	public String getContents() {
 		return contents;
@@ -60,5 +53,11 @@ public class ApplicationDTO {
 	}
 	public void setEnable(int enable) {
 		this.enable = enable;
+	}
+	public int getProposal() {
+		return proposal;
+	}
+	public void setProposal(int proposal) {
+		this.proposal = proposal;
 	}
 }

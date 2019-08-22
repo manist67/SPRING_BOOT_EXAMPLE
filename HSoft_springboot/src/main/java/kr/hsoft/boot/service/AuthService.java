@@ -61,6 +61,8 @@ public class AuthService {
 		userDomain.setPhone(user.getEmail());
 		userDomain.setEmail(user.getEmail());
 		userDomain.setGender(user.getGender());
+		userDomain.setAuth(user.getAuth());
+		userDomain.setLocation(user.getLocation());
 
 		return userDomain;
 	}

@@ -1,19 +1,29 @@
-package kr.hsoft.boot.dto;
+package kr.hsoft.boot.domain;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 
-public class ProposalDTO {
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+
+import org.springframework.boot.jackson.JsonComponent;
+import org.springframework.lang.Nullable;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@JsonComponent
+public class ProposalReadDomain { //
 	private int seq;
 	private String title;
-	private int user;
-	private int minAge;
-	private int maxAge;
-	private String targetGender;
-	private int category;
+	private UserDomain user;
+	private String category;
 	private String address1;
 	private String address2;
+	private String targetGender; // only "F", "M", "A"
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date date;
+	private int minAge;
+	private int maxAge;
 	private int fee;
 	private int minParticipants;
 	private int maxParticipants;
@@ -22,17 +32,23 @@ public class ProposalDTO {
 	private Timestamp create;
 	private Timestamp modify;
 	
-	public int getSeq() {
-		return seq;
-	}
-	public void setSeq(int seq) {
-		this.seq = seq;
-	}
 	public String getTargetGender() {
 		return targetGender;
 	}
 	public void setTargetGender(String targetGender) {
 		this.targetGender = targetGender;
+	}
+	public int getMinAge() {
+		return minAge;
+	}
+	public void setMinAge(int minAge) {
+		this.minAge = minAge;
+	}
+	public int getMaxAge() {
+		return maxAge;
+	}
+	public void setMaxAge(int maxAge) {
+		this.maxAge = maxAge;
 	}
 	public String getTitle() {
 		return title;
@@ -40,11 +56,11 @@ public class ProposalDTO {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public int getCategory() {
-		return category;
+	public UserDomain getUser() {
+		return user;
 	}
-	public void setCategory(int category) {
-		this.category = category;
+	public void setUser(UserDomain user) {
+		this.user = user;
 	}
 	public String getAddress1() {
 		return address1;
@@ -94,34 +110,28 @@ public class ProposalDTO {
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
-	public int getUser() {
-		return user;
+	public String getCategory() {
+		return category;
 	}
-	public void setUser(int user) {
-		this.user = user;
+	public void setCategory(String category) {
+		this.category = category;
 	}
-	public int getMinAge() {
-		return minAge;
+	public int getSeq() {
+		return seq;
 	}
-	public void setMinAge(int minAge) {
-		this.minAge = minAge;
-	}
-	public int getMaxAge() {
-		return maxAge;
-	}
-	public void setMaxAge(int maxAge) {
-		this.maxAge = maxAge;
-	}
-	public Timestamp getCreate() {
-		return create;
-	}
-	public void setCreate(Timestamp create) {
-		this.create = create;
+	public void setSeq(int seq) {
+		this.seq = seq;
 	}
 	public Timestamp getModify() {
 		return modify;
 	}
 	public void setModify(Timestamp modify) {
 		this.modify = modify;
+	}
+	public Timestamp getCreate() {
+		return create;
+	}
+	public void setCreate(Timestamp create) {
+		this.create = create;
 	}
 }

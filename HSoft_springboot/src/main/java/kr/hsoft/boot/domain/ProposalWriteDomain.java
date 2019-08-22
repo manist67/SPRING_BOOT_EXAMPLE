@@ -2,37 +2,59 @@ package kr.hsoft.boot.domain;
 
 import java.sql.Date;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+
 import org.springframework.boot.jackson.JsonComponent;
+import org.springframework.lang.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @JsonComponent
-public class ProposalDomain {
-	private int seq;
+public class ProposalWriteDomain { // ? write!
+	@NotNull
 	private String title;
-	private UserDomain user;
-	private String category;
+	
+	private UserDomain user; // ?? input 
+	@NotNull
+	private int category; // ? integer => category table 
+							 // if get => string
+							 // if post => integer
+	@NotNull
 	private String address1;
+	@Nullable
 	private String address2;
-	private String targetGender;
+	@NotNull
+	private String targetGender; // only "F", "M", "A"
+	
+	@NotNull
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date date;
-	private int minAge;
-	private int maxAge;
-	private int fee;
-	private int minParticipants;
-	private int maxParticipants;
-	private String requirements;
-	private String contents; /* html type in here */
-	private String create;
-	private String modify;
 	
-	public int getSeq() {
-		return seq;
-	}
-	public void setSeq(int seq) {
-		this.seq = seq;
-	}
+	@NotNull
+	@PositiveOrZero
+	private int minAge;
+	@NotNull
+	@PositiveOrZero
+	private int maxAge;
+	
+	@NotNull
+	@PositiveOrZero
+	private int fee;
+
+	@NotNull
+	@PositiveOrZero
+	private int minParticipants;
+	
+	@NotNull
+	@PositiveOrZero
+	private int maxParticipants;
+	
+	@Nullable
+	private String requirements;
+	@NotNull
+	private String contents; /* html type in here */
+	
 	public String getTargetGender() {
 		return targetGender;
 	}
@@ -62,12 +84,6 @@ public class ProposalDomain {
 	}
 	public void setUser(UserDomain user) {
 		this.user = user;
-	}
-	public String getCategory() {
-		return category;
-	}
-	public void setCategory(String category) {
-		this.category = category;
 	}
 	public String getAddress1() {
 		return address1;
@@ -117,16 +133,10 @@ public class ProposalDomain {
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
-	public String getCreate() {
-		return create;
+	public int getCategory() {
+		return category;
 	}
-	public void setCreate(String create) {
-		this.create = create;
-	}
-	public String getModify() {
-		return modify;
-	}
-	public void setModify(String modify) {
-		this.modify = modify;
+	public void setCategory(int category) {
+		this.category = category;
 	}
 }

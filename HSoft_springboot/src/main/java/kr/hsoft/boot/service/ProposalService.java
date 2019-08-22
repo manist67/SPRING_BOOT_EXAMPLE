@@ -3,10 +3,13 @@ package kr.hsoft.boot.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.security.auth.message.AuthException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.hsoft.boot.domain.ProposalDomain;
+import kr.hsoft.boot.domain.ProposalReadDomain;
+import kr.hsoft.boot.domain.ProposalWriteDomain;
 import kr.hsoft.boot.domain.UserDomain;
 import kr.hsoft.boot.dto.ProposalDTO;
 import kr.hsoft.boot.dto.UserDTO;
@@ -22,22 +25,24 @@ public class ProposalService{
 	UserMapper userMapper;
 	
 	
-	public List<ProposalDomain> getProposals(UserDomain userDomain) {
+	public List<ProposalReadDomain> getProposals(UserDomain userDomain) throws AuthException{
 		
 		String location = userDomain.getLocation();
 		String authLevel = userDomain.getAuth();
 		
-		List<ProposalDTO> proposals = new ArrayList<ProposalDTO>();
+		List<ProposalDTO> proposals;
 		
-		if(authLevel == "USER") {
+		if(authLevel.equals("USER")) {
 			proposals = proposalMapper.selectProposalsForUser(location);
-		}else if(authLevel == "ADMIN") {
+		}else if(authLevel.equals("ADMIN")) {
 			proposals = proposalMapper.selectProposals();
-		}else if(authLevel == "MASTER") {
+		}else if(authLevel.equals("MASTER")) {
 			proposals = proposalMapper.selectProposalsForMaster(location);
+		} else {
+			throw new AuthException();
 		}
 		
-		List<ProposalDomain> proposalDomains = new ArrayList<ProposalDomain>();
+		List<ProposalReadDomain> proposalDomains = new ArrayList<ProposalReadDomain>();
 		
 		
 		for(ProposalDTO proposal: proposals) {
@@ -51,12 +56,14 @@ public class ProposalService{
 			writer.setGender(user.getGender());
 			writer.setNickname(user.getNickname());
 			writer.setPhone(user.getPhone());
+			writer.setLocation(user.getLocation());
 			
-			ProposalDomain proposalDomain = new ProposalDomain();
+			ProposalReadDomain proposalDomain = new ProposalReadDomain();
 			proposalDomain.setSeq(proposal.getSeq());
 			proposalDomain.setTitle(proposal.getTitle());
 			proposalDomain.setUser(writer);
-			proposalDomain.setCategory(proposal.getCategory());
+			// TODO: set category
+			proposalDomain.setCategory("");
 			proposalDomain.setAddress1(proposal.getAddress1());
 			proposalDomain.setAddress2(proposal.getAddress2());
 			proposalDomain.setTargetGender(proposal.getTargetGender());
@@ -73,11 +80,9 @@ public class ProposalService{
 		}
 		
 		return proposalDomains;
-	
-		
 	}
 	
-	public ProposalDomain getProposal(int seq) {
+	public ProposalReadDomain getProposal(int seq) {
 		
 		ProposalDTO proposal = new ProposalDTO();
 		
@@ -91,11 +96,14 @@ public class ProposalService{
 		writer.setNickname(user.getNickname());
 		writer.setPhone(user.getPhone());
 		
-		ProposalDomain proposalDomain =  new ProposalDomain();
+		ProposalReadDomain proposalDomain =  new ProposalReadDomain();
 		proposalDomain.setSeq(proposal.getSeq());
 		proposalDomain.setTitle(proposal.getTitle());
 		proposalDomain.setUser(writer);
-		proposalDomain.setCategory(proposal.getCategory());
+		
+		proposalDomain.setCategory("");
+		//TODO: get category in table
+		
 		proposalDomain.setAddress1(proposal.getAddress1());
 		proposalDomain.setAddress2(proposal.getAddress2());
 		proposalDomain.setTargetGender(proposal.getTargetGender());
@@ -107,11 +115,13 @@ public class ProposalService{
 		proposalDomain.setMaxParticipants(proposal.getMaxParticipants());
 		proposalDomain.setRequirements(proposal.getRequirements());
 		proposalDomain.setContents(proposal.getContents());
+		proposalDomain.setCreate(proposal.getCreate());
+		proposalDomain.setModify(proposal.getModify());
 		
 		return proposalDomain;
 	}
 
-	public void postProposal(UserDomain user, ProposalDomain proposalDomain) {
+	public void postProposal(UserDomain user, ProposalWriteDomain proposalDomain) {
 		
 		// 예외처리,, valid..?
 		ProposalDTO proposalDTO = new ProposalDTO();
@@ -134,7 +144,7 @@ public class ProposalService{
 		
 	}
 	
-	public void putProposalForUser(int seq, ProposalDomain proposalDomain) {
+	public void putProposalForUser(int seq, ProposalWriteDomain proposalDomain) {
 		
 		ProposalDTO proposalDTO = new ProposalDTO();
 		proposalDTO.setTitle(proposalDomain.getTitle());
@@ -154,7 +164,7 @@ public class ProposalService{
 		proposalMapper.putProposal(seq, proposalDTO);
 	}
 	
-public void putProposalForAdmin(int seq, ProposalDomain proposalDomain) {
+	public void putProposalForAdmin(int seq, ProposalWriteDomain proposalDomain) {
 		
 		ProposalDTO proposalDTO = new ProposalDTO();
 		proposalDTO.setTitle(proposalDomain.getTitle());
@@ -172,15 +182,14 @@ public void putProposalForAdmin(int seq, ProposalDomain proposalDomain) {
 		proposalDTO.setContents(proposalDomain.getContents());
 		
 		proposalMapper.putProposal(seq, proposalDTO);
-		proposalMapper.putProposalState(seq);
 	}
 	
 	public void putProposalState(int seq) {
-		proposalMapper.putProposalState(seq);
+		// proposalMapper.putProposalState(seq);
 	}
 	
 	public void deleteProposal(int seq) {
-		proposalMapper.deleteProposal(seq);
+		// proposalMapper.deleteProposal(seq);
 	}
 	
 }

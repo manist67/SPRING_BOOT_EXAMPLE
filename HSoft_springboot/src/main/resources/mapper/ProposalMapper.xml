@@ -7,6 +7,25 @@
 		SELECT * FROM PROPOSAL
 	</select>
 	
+	<select id="selectProposalsForUser" parameterType="java.lang.String" resultType="kr.hsoft.boot.dto.ProposalDTO">
+		SELECT PROPOSAL.*, USER.LOCATION FROM PROPOSAL
+		JOIN USER 
+		ON USER.SEQ = PROPOSAL.USER
+		WHERE LOCATION = #{location}
+			AND STATUS = 1
+	</select>
+	
+	<select id="selectProposalsForMaster" parameterType="java.lang.String" resultType="kr.hsoft.boot.dto.ProposalDTO">
+		SELECT PROPOSAL.*, USER.LOCATION FROM PROPOSAL
+		JOIN USER 
+		ON USER.SEQ = PROPOSAL.USER
+		WHERE LOCATION = #{location}
+	</select>
+	
+	<select id="selectProposal" parameterType="java.lang.Integer" resultType="kr.hsoft.boot.dto.ProposalDTO">
+		SELECT * FROM PROPOSAL WHERE SEQ = #{seq}
+	</select>
+	
 	<select id="selectProposalBySeq" parameterType="java.lang.Integer" resultType="kr.hsoft.boot.dto.ProposalDTO">
 		SELECT * FROM PROPOSAL WHERE SEQ = #{seq}
 	</select>
@@ -22,4 +41,7 @@
 			#{fee}, #{minParticipants}, #{maxParticipants}, #{requirements}, #{contents}
 		)
 	</insert>
+	
+	<update id="putProposal">
+	</update>
 </mapper>
