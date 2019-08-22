@@ -31,6 +31,8 @@ public class SignUpDomain {
 	private String nickname;
 	@NotEmpty
 	private String name;
+	@NotEmpty
+	private String location;
 	
 	public String getUserID() {
 		return userID;
@@ -85,5 +87,11 @@ public class SignUpDomain {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
 	}
 }

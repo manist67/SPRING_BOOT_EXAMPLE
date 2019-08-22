@@ -68,6 +68,7 @@ public class UserService {
 		userDTO.setGender(userInfo.getGender());
 		userDTO.setNickname(userInfo.getNickname());
 		userDTO.setNickname(userInfo.getName());
+		userDTO.setLocation(userInfo.getLocation());
 		
 		userMapper.insertUser(userDTO);
 	}

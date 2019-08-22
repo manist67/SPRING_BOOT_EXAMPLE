@@ -16,6 +16,7 @@ public class UserDTO {
 	private Timestamp modify;
 	private String auth;
 	private String name;
+	private String location;
 	private boolean enable;
 	
 	public int getSeq() {
@@ -101,5 +102,11 @@ public class UserDTO {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
 	}
 }

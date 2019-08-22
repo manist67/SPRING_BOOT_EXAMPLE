@@ -17,7 +17,8 @@
 			`CREATE` as `create`,
 			`MODIFY` as `modify`,
 			AUTH as auth,
-			ENABLE as enable
+			ENABLE as enable,
+			LOCATION as `location`
 		FROM USER limit 1
 	</select>
 	<select id="selectUserBySeq" parameterType="java.lang.Integer" resultType="kr.hsoft.boot.dto.UserDTO">
@@ -34,7 +35,8 @@
 			`CREATE` as `create`,
 			`MODIFY` as `modify`,
 			AUTH as auth,
-			ENABLE as enable
+			ENABLE as enable,
+			LOCATION as `location`
 		FROM USER WHERE SEQ = #{seq}
 	</select>
 	
@@ -66,12 +68,13 @@
 			`CREATE` as `create`,
 			`MODIFY` as `modify`,
 			AUTH as auth,
-			ENABLE as enable
+			ENABLE as enable,
+			LOCATION as `location`
 		FROM USER LIMIT #{unit} OFFSET #{offset}
 	</select>
 	
 	<insert id="insertUser" parameterType="kr.hsoft.boot.dto.UserDTO">
-		INSERT INTO USER (USER_ID, PASSWORD, ADDRESS1, ADDRESS2, PHONE, EMAIL, GENDER, NICKNAME, NAME)
-		VALUES (#{userID}, #{password}, #{address1}, #{address2}, #{phone}, #{email}, #{gender}, #{nickname}, #{name})
+		INSERT INTO USER (USER_ID, PASSWORD, ADDRESS1, ADDRESS2, PHONE, EMAIL, GENDER, NICKNAME, NAME, LOCATION)
+		VALUES (#{userID}, #{password}, #{address1}, #{address2}, #{phone}, #{email}, #{gender}, #{nickname}, #{name}, #{location})
 	</insert>
 </mapper>
