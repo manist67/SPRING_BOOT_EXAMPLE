@@ -8,6 +8,7 @@ import javax.security.sasl.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,7 @@ public class ApplicationController {
 	AuthService authService;
 
 	@RequestMapping(method=RequestMethod.GET)
+	@CrossOrigin("http://localhost:3000")
 	public ResponseEntity<?> getApplications(@RequestHeader HashMap<String, String> header) {
 		UserDomain userDomain;
 		try {
@@ -47,6 +49,7 @@ public class ApplicationController {
 	}
 
 	@RequestMapping(value="/{seq}", method=RequestMethod.GET)
+	@CrossOrigin("http://localhost:3000")
 	public ResponseEntity<?> getApplicationDetail(@RequestHeader HashMap<String, String> header, @PathVariable("seq") int seq) {
 		UserDomain userDomain;
 		try {

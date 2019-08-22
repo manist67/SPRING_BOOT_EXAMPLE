@@ -3,7 +3,7 @@ package kr.hsoft.boot.domain;
 public class ApplicationDomain {
 	private int seq;
 	private UserDomain user;
-	private int proposal;
+	private ProposalReadDomain proposal;
 	private String contents;
 	private int childrenCount;
 	private int enable;
@@ -38,10 +38,10 @@ public class ApplicationDomain {
 	public void setEnable(int enable) {
 		this.enable = enable;
 	}
-	public int getProposal() {
+	public ProposalReadDomain getProposal() {
 		return proposal;
 	}
-	public void setProposal(int proposal) {
+	public void setProposal(ProposalReadDomain proposal) {
 		this.proposal = proposal;
 	}
 	

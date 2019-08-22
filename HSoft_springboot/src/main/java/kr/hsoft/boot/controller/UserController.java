@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -37,6 +38,7 @@ public class UserController {
 	AuthService authService;
 	
 	@RequestMapping(method = RequestMethod.GET)
+	@CrossOrigin("http://localhost:3000")
 	public ResponseEntity<?> getUsers(@RequestHeader HashMap<String, String> header, PaginationDomain pagination) {
 		String authLevel;
 
@@ -58,6 +60,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
+	@CrossOrigin("http://localhost:3000")
 	public ResponseEntity<?> postUser(@RequestBody @Valid SignUpDomain signUpDomain, Errors errors) {
 		if(errors.hasErrors()) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -76,6 +79,7 @@ public class UserController {
 	
 	
 	@RequestMapping(value= "/{seq}/proposals", method = RequestMethod.GET)
+	@CrossOrigin("http://localhost:3000")
 	public ResponseEntity<?> getUserProposals(@RequestHeader HashMap<String, String> header, @PathVariable("seq") int seq){
 		String token = header.get("token");
 		if(token == null) {

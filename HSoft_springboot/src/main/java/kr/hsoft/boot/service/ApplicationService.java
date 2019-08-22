@@ -9,10 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.hsoft.boot.mapper.ApplicationMapper;
+import kr.hsoft.boot.mapper.ProposalMapper;
 import kr.hsoft.boot.dto.ApplicationDTO;
+import kr.hsoft.boot.dto.ProposalDTO;
 import kr.hsoft.boot.exception.ApplicationNotFoundException;
 import kr.hsoft.boot.domain.ApplicationDomain;
 import kr.hsoft.boot.domain.ApplicationWriteDomain;
+import kr.hsoft.boot.domain.ProposalReadDomain;
 import kr.hsoft.boot.domain.UserDomain;
 
 @Service
@@ -20,6 +23,9 @@ public class ApplicationService {
 
 	@Autowired
 	private ApplicationMapper applicationMapper;
+	
+	@Autowired
+	private ProposalMapper proposalMapper;
 
 	public List<ApplicationDomain> getApplications(UserDomain user){
 		List<ApplicationDTO> results = applicationMapper.getApplications(user.getSeq());
@@ -31,7 +37,13 @@ public class ApplicationService {
 			AppDomain.setChildrenCount(result.getChildrenCount());
 			AppDomain.setContents(result.getContents());
 			AppDomain.setEnable(result.getEnable());
-			AppDomain.setProposal(result.getProposal());
+
+			ProposalReadDomain proposalDomain = new ProposalReadDomain();
+			ProposalDTO proposalDTO = proposalMapper.selectProposal(result.getProposal());
+			proposalDomain.setSeq(proposalDTO.getSeq());
+			proposalDomain.setTitle(proposalDTO.getTitle());
+			
+			AppDomain.setProposal(proposalDomain);
 			AppDomain.setUser(user);
 
 			resultDomain.add(AppDomain);
@@ -72,7 +84,14 @@ public class ApplicationService {
 		detailDomain.setChildrenCount(detailDTO.getChildrenCount());
 		detailDomain.setContents(detailDTO.getContents());
 		detailDomain.setEnable(detailDTO.getEnable());
-		detailDomain.setProposal(detailDTO.getProposal());
+		
+		ProposalReadDomain proposalDomain = new ProposalReadDomain();
+		ProposalDTO proposalDTO = proposalMapper.selectProposal(detailDTO.getProposal());
+		proposalDomain.setSeq(proposalDTO.getSeq());
+		proposalDomain.setTitle(proposalDTO.getTitle());
+		
+		detailDomain.setProposal(proposalDomain);
+		
 		detailDomain.setSeq(detailDTO.getSeq());
 		detailDomain.setUser(user);
 		

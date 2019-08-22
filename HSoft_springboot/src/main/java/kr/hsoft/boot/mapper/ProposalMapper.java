@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import kr.hsoft.boot.dto.ProposalDTO;
 
@@ -13,6 +14,7 @@ public interface ProposalMapper {
 	public List<ProposalDTO> selectProposalsForUser(String location);
 	public List<ProposalDTO> selectProposalsForMaster(String location);
 	public ProposalDTO selectProposal(int seq);
+	@Select("SELECT * FROM PROPOSAL WHERE USER = #{seq}")
 	public List<ProposalDTO> selectProposalByUser(int seq); // 해당 seq는 user의 seq
 	public void insertProposal(ProposalDTO proposalDTO);
 	public void putProposal(@Param("seq") int seq, @Param("proposal") ProposalDTO proposalDTO);
