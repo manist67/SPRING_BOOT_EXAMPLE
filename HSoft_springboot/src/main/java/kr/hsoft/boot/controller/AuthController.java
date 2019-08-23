@@ -79,6 +79,7 @@ public class AuthController {
 	}
 	
 	@RequestMapping(value= "/validator", method = RequestMethod.GET)
+	@CrossOrigin(origins = "http://localhost:3000")
 	public ResponseEntity<?> validateId(String value, String flag) {
 		if(value == null ) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 
