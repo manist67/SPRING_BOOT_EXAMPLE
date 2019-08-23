@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 
-import kr.hsoft.boot.domain.ApplicationWriteDomain;
 import kr.hsoft.boot.dto.ApplicationDTO;
 
 @Mapper

@@ -6,9 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import kr.hsoft.boot.domain.CategoryDomain;
-import kr.hsoft.boot.domain.ProposalReadDomain;
 import kr.hsoft.boot.dto.CategoryDTO;
-import kr.hsoft.boot.dto.ProposalDTO;
 import kr.hsoft.boot.mapper.CategoryMapper;
 
 public class CategoryService {
