@@ -48,15 +48,6 @@ public class UserService {
 			throw new SignUpErrorException("userID", "아이디 중복");
 		}
 		
-		if(userMapper.countUsersByEmail(userInfo.getEmail()) > 0) {
-			throw new SignUpErrorException("email", "이메일 중복");
-		}
-
-		String gender = userInfo.getGender();
-		if(!gender.equals("M") && !gender.equals("F")) {
-			throw new SignUpErrorException("gender", "성별은 M / F");
-		}
-		
 		if(userMapper.countUsersByPhone(userInfo.getPhone()) > 0) {
 			throw new SignUpErrorException("phone", "휴대폰 중복");
 		}
@@ -73,10 +64,7 @@ public class UserService {
 		userDTO.setAddress2(userInfo.getAddress2());
 		userDTO.setPhone(userInfo.getPhone());
 		userDTO.setEmail(userInfo.getEmail());
-		userDTO.setName(userInfo.getName());
-		userDTO.setGender(userInfo.getGender());
 		userDTO.setNickname(userInfo.getNickname());
-		userDTO.setNickname(userInfo.getName());
 		userDTO.setLocation(userInfo.getLocation());
 		
 		userMapper.insertUser(userDTO);

@@ -18,18 +18,16 @@ public class SignUpDomain {
 	
 	@NotEmpty
 	private String phone;
-	@NotEmpty
+	@Nullable
 	private String address1;
 	@Nullable
 	private String address2;
 	
-	@NotEmpty
+	@Nullable
 	private String gender;
 	@NotEmpty
 	private String nickname;
-	@NotEmpty
-	private String name;
-	@NotEmpty
+	@Nullable
 	private String location;
 	
 	public String getUserID() {
@@ -68,23 +66,11 @@ public class SignUpDomain {
 	public void setAddress2(String address2) {
 		this.address2 = address2;
 	}
-	public String getGender() {
-		return gender;
-	}
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
 	public String getNickname() {
 		return nickname;
 	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
 	}
 	public String getLocation() {
 		return location;
@@ -92,4 +78,5 @@ public class SignUpDomain {
 	public void setLocation(String location) {
 		this.location = location;
 	}
+	
 }

@@ -63,6 +63,7 @@ public class UserController {
 	@CrossOrigin("http://localhost:3000")
 	public ResponseEntity<?> postUser(@RequestBody @Valid SignUpDomain signUpDomain, Errors errors) {
 		if(errors.hasErrors()) {
+			System.out.println(errors.toString());
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 		
