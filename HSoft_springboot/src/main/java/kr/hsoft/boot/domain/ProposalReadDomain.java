@@ -3,11 +3,7 @@ package kr.hsoft.boot.domain;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
-
 import org.springframework.boot.jackson.JsonComponent;
-import org.springframework.lang.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
