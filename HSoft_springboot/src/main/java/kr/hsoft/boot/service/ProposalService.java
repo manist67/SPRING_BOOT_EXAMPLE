@@ -50,9 +50,7 @@ public class ProposalService{
 		}
 		
 		List<ProposalReadDomain> proposalDomains = new ArrayList<ProposalReadDomain>();
-		
-		System.out.println("Qhdkso!88");
-		System.out.println(proposals.get(0).getMaxAge() + " "+proposals.get(0).getMinAge());
+
 		
 		for(ProposalDTO proposal: proposals) {
 			
@@ -86,6 +84,7 @@ public class ProposalService{
 			proposalDomain.setMaxParticipants(proposal.getMaxParticipants());
 			proposalDomain.setRequirements(proposal.getRequirements());
 			proposalDomain.setContents(proposal.getContents());
+			proposalDomain.setStatus(proposal.getStatus());
 			
 			proposalDomains.add(proposalDomain);
 		}
@@ -190,6 +189,10 @@ public class ProposalService{
 		proposalDTO.setContents(proposalDomain.getContents());
 		
 		proposalMapper.putProposal(seq, proposalDTO);
+	}
+	
+	public void patchStatus(int seq, boolean status) {
+		proposalMapper.putProposalStatus(seq, status);
 	}
 	
 	public void putProposalState(int seq) {

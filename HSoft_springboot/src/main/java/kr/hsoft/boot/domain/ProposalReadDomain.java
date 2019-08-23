@@ -31,6 +31,7 @@ public class ProposalReadDomain { //
 	private String contents; /* html type in here */
 	private Timestamp create;
 	private Timestamp modify;
+	private int status;
 	
 	public String getTargetGender() {
 		return targetGender;
@@ -133,5 +134,11 @@ public class ProposalReadDomain { //
 	}
 	public void setCreate(Timestamp create) {
 		this.create = create;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
 	}
 }

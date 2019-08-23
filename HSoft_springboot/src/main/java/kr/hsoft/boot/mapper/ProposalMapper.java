@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import kr.hsoft.boot.domain.PaginationDomain;
 import kr.hsoft.boot.dto.ProposalDTO;
@@ -21,7 +22,10 @@ public interface ProposalMapper {
 	@Select("SELECT * FROM PROPOSAL WHERE USER = #{seq}")
 	public List<ProposalDTO> selectProposalByUser(int seq); // 해당 seq는 user의 seq
 	public void insertProposal(ProposalDTO proposalDTO);
+	@Update("UPDATE PROPOSAL SET STATUS = #{status} where SEQ = #{seq}")
+	public void putProposalStatus(@Param("seq") int seq, @Param("status") Boolean status);
+	
 	public void putProposal(@Param("seq") int seq, @Param("proposal") ProposalDTO proposalDTO);
-	public void putProposalState(@Param("seq") int seq, @Param("state") boolean state);
+	//public void putProposalState(@Param("seq") int seq, @Param("state") boolean state);
 	public void deleteProposal(int seq);
 }

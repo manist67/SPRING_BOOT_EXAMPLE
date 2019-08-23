@@ -21,6 +21,7 @@ public class ProposalDTO {
 	private String contents; /* html type in here */
 	private Timestamp create;
 	private Timestamp modify;
+	private int status;
 	
 	public int getSeq() {
 		return seq;
@@ -123,5 +124,11 @@ public class ProposalDTO {
 	}
 	public void setModify(Timestamp modify) {
 		this.modify = modify;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
 	}
 }

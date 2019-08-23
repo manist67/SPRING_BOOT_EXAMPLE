@@ -177,6 +177,16 @@ public class ProposalsController {
 		return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
 	}
 	
+
+	@RequestMapping(value= "/{seq}", method = RequestMethod.PATCH)
+	@CrossOrigin("http://localhost:3000")
+	public ResponseEntity<?> patchProposalStatus(@RequestHeader HashMap<String, String> header,
+			@RequestBody HashMap<String, Object> body, @PathVariable int seq) {
+		proposalService.patchStatus(seq, (Boolean)body.get("status"));
+
+		return new ResponseEntity<>(null, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value= "/{seq}", method = RequestMethod.DELETE)
 	@CrossOrigin("http://localhost:3000")
 	public ResponseEntity<?> deleteProposal(@RequestHeader @Valid HashMap<String, String> header, 
@@ -200,6 +210,4 @@ public class ProposalsController {
 		
 		return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
 	}
-	
-	
 }
