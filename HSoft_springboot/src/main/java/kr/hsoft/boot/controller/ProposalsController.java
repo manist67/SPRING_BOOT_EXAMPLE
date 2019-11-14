@@ -40,14 +40,14 @@ public class ProposalsController {
 	ApplicationService applicationService;
 	
 	@RequestMapping(value= "/{seq}", method = RequestMethod.GET)
-	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146:8080/" })
+	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146" })
 	public ResponseEntity<?> getProposal(@RequestHeader @Valid HashMap<String, String> header, @PathVariable("seq") int seq) {
 		ProposalReadDomain proposal = proposalService.getProposal(seq);
 		return new ResponseEntity<ProposalReadDomain>(proposal, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/{seq}/applications", method=RequestMethod.GET)
-	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146:8080/" })
+	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146" })
 	public ResponseEntity<?> getProposalApplications(@PathVariable int seq){
 		List<ApplicationDomain> proposalApplication = applicationService.getApplicationsByProposal(seq);
 		
@@ -59,7 +59,7 @@ public class ProposalsController {
 	}
 	
 	@RequestMapping(value="/{seq}/applications", method=RequestMethod.POST)
-	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146:8080/" })
+	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146" })
 	public ResponseEntity<?> getProposalApplications(
 			@RequestHeader HashMap<String, String> header, 
 			@PathVariable int seq, @RequestBody @Valid ApplicationWriteDomain application,
@@ -88,7 +88,7 @@ public class ProposalsController {
 	}
 	
 	@RequestMapping(value="/{seq}/applications/count", method=RequestMethod.GET)
-	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146:8080/" })
+	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146" })
 	public ResponseEntity<?> getProposalApplicationCount(@PathVariable int seq){
 		int applicationCount = applicationService.getApplicationsByProposal(seq).size();
 
@@ -96,7 +96,7 @@ public class ProposalsController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146:8080/" })
+	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146" })
 	public ResponseEntity<?> getProposals(
 			@RequestHeader @Valid HashMap<String, String> header, 
 			PaginationDomain pagination) {
@@ -131,7 +131,7 @@ public class ProposalsController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146:8080/" })
+	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146" })
 	public ResponseEntity<?> postProposal(@RequestHeader HashMap<String, String> header, 
 			@RequestBody @Valid ProposalWriteDomain proposalDomain, Errors errors) throws UserNotFoundException, AuthNotFoundException{
 		if(errors.hasErrors()) {
@@ -151,7 +151,7 @@ public class ProposalsController {
 	}
 	
 	@RequestMapping(value= "/{seq}", method = RequestMethod.PUT)
-	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146:8080/" })
+	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146" })
 	public ResponseEntity<?> putProposal(@RequestHeader @Valid HashMap<String, String> header, 
 			@RequestBody ProposalWriteDomain proposalDomain, @PathVariable("seq") int seq) throws UserNotFoundException, AuthNotFoundException{
 		String token = header.get("token");
@@ -179,7 +179,7 @@ public class ProposalsController {
 	
 
 	@RequestMapping(value= "/{seq}", method = RequestMethod.PATCH)
-	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146:8080/" })
+	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146" })
 	public ResponseEntity<?> patchProposalStatus(@RequestHeader HashMap<String, String> header,
 			@RequestBody HashMap<String, Object> body, @PathVariable int seq) {
 		proposalService.patchStatus(seq, (Boolean)body.get("status"));
@@ -188,7 +188,7 @@ public class ProposalsController {
 	}
 	
 	@RequestMapping(value= "/{seq}", method = RequestMethod.DELETE)
-	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146:8080/" })
+	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146" })
 	public ResponseEntity<?> deleteProposal(@RequestHeader @Valid HashMap<String, String> header, 
 			@PathVariable("seq") int seq) throws UserNotFoundException, AuthNotFoundException{
 		String token = header.get("token");

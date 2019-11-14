@@ -23,7 +23,7 @@ public class CategoryController {
 	CategoryService categoryService;
 	
 	@RequestMapping (method = RequestMethod.GET)
-	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146:8080/" })
+	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146" })
 	public ResponseEntity<?> getProposal(@RequestHeader @Valid HashMap<String, String> header) throws UserNotFoundException, AuthNotFoundException {
 		String token = header.get("token");
 		if(token == null) {

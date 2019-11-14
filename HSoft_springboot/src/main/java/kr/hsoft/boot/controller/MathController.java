@@ -25,7 +25,7 @@ public class MathController {
 	@Autowired
 	private MathResultService mathResultService;
 
-	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146:8080/" })
+	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146" })
 	@RequestMapping(method=RequestMethod.GET)
 	public List<MathResultDomain> main() {
 		List<MathResultDomain> resultDomain = mathResultService.getResults();
@@ -33,7 +33,7 @@ public class MathController {
 		return resultDomain;
 	}
 
-	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146:8080/" })
+	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146" })
 	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public MathResultDomain add(@RequestBody @Valid MathInsertDomain insert) {
 		MathResultDomain resultDomain = new MathResultDomain();
