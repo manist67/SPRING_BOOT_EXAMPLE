@@ -28,7 +28,7 @@ public class AuthController {
 	@Autowired
 	AuthService authService;
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146:8080/" })
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<?> getUserInfo(@RequestHeader HashMap<String, String> header) {
 		String token = header.get("token");
@@ -48,7 +48,7 @@ public class AuthController {
 		return new ResponseEntity<UserDomain>(user, HttpStatus.OK);
 	}
 	
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146:8080/" })
 	@RequestMapping(value="/login", method=RequestMethod.POST) 
 	public ResponseEntity<?> login(@RequestBody @Valid LoginDomain loginInfo, Errors error){
 		if(error.hasErrors()) {
@@ -65,7 +65,7 @@ public class AuthController {
 		return new ResponseEntity<AuthDomain>(auth , HttpStatus.OK);
 	}
 	
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146:8080/" })
 	@RequestMapping(value="/logout", method=RequestMethod.POST) 
 	public ResponseEntity<?> logout(@RequestHeader @Valid HashMap<String, String> header) {
 		String token = header.get("token");
@@ -78,7 +78,7 @@ public class AuthController {
 	}
 	
 	@RequestMapping(value= "/validator", method = RequestMethod.GET)
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146:8080/" })
 	public ResponseEntity<?> validateId(String value, String flag) {
 		if(value == null ) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 

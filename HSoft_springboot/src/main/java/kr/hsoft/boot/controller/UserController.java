@@ -38,7 +38,7 @@ public class UserController {
 	AuthService authService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	@CrossOrigin("http://localhost:3000")
+	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146:8080/" })
 	public ResponseEntity<?> getUsers(@RequestHeader HashMap<String, String> header, PaginationDomain pagination) {
 		String authLevel;
 
@@ -60,7 +60,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	@CrossOrigin("http://localhost:3000")
+	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146:8080/" })
 	public ResponseEntity<?> postUser(@RequestBody @Valid SignUpDomain signUpDomain, Errors errors) {
 		if(errors.hasErrors()) {
 			System.out.println(errors.toString());
@@ -80,7 +80,7 @@ public class UserController {
 	
 	
 	@RequestMapping(value= "/{seq}/proposals", method = RequestMethod.GET)
-	@CrossOrigin("http://localhost:3000")
+	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146:8080/" })
 	public ResponseEntity<?> getUserProposals(@RequestHeader HashMap<String, String> header, @PathVariable("seq") int seq){
 		String token = header.get("token");
 		if(token == null) {

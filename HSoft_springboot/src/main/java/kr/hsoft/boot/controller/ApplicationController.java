@@ -32,7 +32,7 @@ public class ApplicationController {
 	AuthService authService;
 
 	@RequestMapping(method=RequestMethod.GET)
-	@CrossOrigin("http://localhost:3000")
+	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146:8080/" })
 	public ResponseEntity<?> getApplications(@RequestHeader HashMap<String, String> header) {
 		UserDomain userDomain;
 		try {
@@ -49,7 +49,7 @@ public class ApplicationController {
 	}
 
 	@RequestMapping(value="/{seq}", method=RequestMethod.GET)
-	@CrossOrigin("http://localhost:3000")
+	@CrossOrigin(origins = { "http://localhost:3000", "http://52.78.51.146:8080/" })
 	public ResponseEntity<?> getApplicationDetail(@RequestHeader HashMap<String, String> header, @PathVariable("seq") int seq) {
 		UserDomain userDomain;
 		try {
